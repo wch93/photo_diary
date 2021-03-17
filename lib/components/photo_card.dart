@@ -36,25 +36,74 @@ class Photo {
 List<Photo> photos(BuildContext context) => [
       Photo(
         assetName: 'assets/IMG_0001.JPG',
-        title: "title",
-        description: "description",
-        city: "city",
-        location: "location",
+        title: "十三陵水库旁边的小泰迪",
+        description: "晴天,阳光明媚",
+        city: "北京",
+        location: "十三陵",
+        cardType: CardType.tappable,
       ),
       Photo(
         assetName: 'assets/IMG_0002.JPG',
-        title: "title",
-        description: "description",
-        city: "city",
-        location: "location",
+        title: "公园盛开的粉色花朵",
+        description: "蓝天白云心情好",
+        city: "Beijing",
+        location: "Chaoyang",
         cardType: CardType.tappable,
       ),
       Photo(
         assetName: 'assets/IMG_0003.JPG',
-        title: "title",
-        description: "description",
-        city: "city",
-        location: "location",
+        title: "假装在日本之福神店",
+        description: "就看看,买不起",
+        city: "北京市昌平区",
+        location: "奥特莱斯",
+        cardType: CardType.selectable,
+      ),
+      Photo(
+        assetName: 'assets/IMG_0004.JPG',
+        title: "奶茶店对着墙发呆",
+        description: "也没啥好喝的",
+        city: "北京市西城区",
+        location: "西单大悦城",
+        cardType: CardType.selectable,
+      ),
+      Photo(
+        assetName: 'assets/IMG_0005.JPG',
+        title: "假装在日本之居酒屋",
+        description: "其实在村里",
+        city: "北京市海淀区",
+        location: "大马路边上",
+        cardType: CardType.selectable,
+      ),
+      Photo(
+        assetName: 'assets/IMG_0006.JPG',
+        title: "这车真帅",
+        description: "可惜这车牌了",
+        city: "北京市朝阳区",
+        location: "798艺术区",
+        cardType: CardType.selectable,
+      ),
+      Photo(
+        assetName: 'assets/IMG_0007.JPG',
+        title: "海滩之旅",
+        description: "一堆遮阳的",
+        city: "海南省三亚市",
+        location: "就在大海边",
+        cardType: CardType.selectable,
+      ),
+      Photo(
+        assetName: 'assets/IMG_0008.JPG',
+        title: "你幸福么?",
+        description: "在屯里挺幸福",
+        city: "北京市朝阳区",
+        location: "三里屯",
+        cardType: CardType.selectable,
+      ),
+      Photo(
+        assetName: 'assets/IMG_0009.JPG',
+        title: "静谧午后",
+        description: "疫情期间 - 空无一人的操场",
+        city: "北京市朝阳区",
+        location: "三里屯",
         cardType: CardType.selectable,
       ),
     ];
@@ -78,7 +127,7 @@ class PhotoCardItem extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         child: Column(
           children: [
-            SectionTitle(title: "title"),
+            // SectionTitle(title: "title"),
             SizedBox(
               height: height,
               child: Card(
@@ -114,7 +163,7 @@ class TappablePhotoCardItem extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         child: Column(
           children: [
-            SectionTitle(title: "title"),
+            // SectionTitle(title: "title"),
             SizedBox(
               height: height,
               child: Card(
@@ -171,7 +220,7 @@ class _SelectablePhotoCardItemState extends State<SelectablePhotoCardItem> {
         padding: const EdgeInsets.all(8),
         child: Column(
           children: [
-            SectionTitle(title: "title"),
+            // SectionTitle(title: "title"),
             SizedBox(
               height: height,
               child: Card(
@@ -218,26 +267,6 @@ class _SelectablePhotoCardItemState extends State<SelectablePhotoCardItem> {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class SectionTitle extends StatelessWidget {
-  const SectionTitle({
-    Key key,
-    this.title,
-  }) : super(key: key);
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(4, 4, 4, 12),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Text(title, style: Theme.of(context).textTheme.subtitle1),
       ),
     );
   }
@@ -354,7 +383,7 @@ class _CardsDemoState extends State<CardsDemo> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text("GalleryLocalizations.of(context).demoCardTitle"),
+        title: Text("摄影日记"),
       ),
       body: Scrollbar(
         child: ListView(
