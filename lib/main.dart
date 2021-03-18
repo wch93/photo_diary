@@ -14,6 +14,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        // debugShowMaterialGrid: true,
         theme: ThemeData(
           primaryColor: Colors.green,
           highlightColor: Colors.transparent,
