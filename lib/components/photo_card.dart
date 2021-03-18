@@ -381,10 +381,10 @@ class _CardsDemoState extends State<CardsDemo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text("摄影日记"),
-      ),
+      // appBar: AppBar(
+      //   automaticallyImplyLeading: false,
+      //   title: Text("摄影日记"),
+      // ),
       body: Scrollbar(
         child: ListView(
           padding: const EdgeInsets.only(top: 8, left: 8, right: 8),

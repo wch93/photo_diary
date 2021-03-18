@@ -1,34 +1,98 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photodiary/pages/home.dart';
+import 'package:photodiary/pages/profile.dart';
 
 main(List<String> args) {
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  MyApp({Key key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({Key key}) : super(key: key);
 
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Container(
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: Colors.green,
-          // primaryColorDark: Colors.blue,
-          primaryColorBrightness: Brightness.dark,
-          // highlightColor: Colors.transparent,
-          // splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent,
         ),
-        title: "摄影日记",
-        home: MyHomePage(),
+        // title: "摄影日记",
+        home: MyStackPage(),
       ),
     );
   }
 }
+
+class MyStackPage extends StatefulWidget {
+  MyStackPage({Key key}) : super(key: key);
+
+  @override
+  _MyStackPageState createState() => _MyStackPageState();
+}
+
+class _MyStackPageState extends State<MyStackPage> {
+  int _currentIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("摄影日记"),
+        ),
+        body: Center(
+          child: IndexedStack(
+            index: this._currentIndex,
+            children: <Widget>[
+              MyHomePage(),
+              Profile(),
+            ],
+          ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          type: BottomNavigationBarType.fixed,
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "首页"),
+            BottomNavigationBarItem(icon: Icon(Icons.account_box), label: "我的"),
+          ],
+          onTap: (int index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+        ),
+      ),
+    );
+  }
+}
+
+// class MyStackPage extends StatefulWidget {
+//   MyStackPage({Key key}) : super(key: key);
+
+//   @override
+//   _MyStackPageState createState() => _MyStackPageState();
+// }
+
+// class _MyStackPageState extends State<MyStackPage> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       child: MaterialApp(
+//         debugShowCheckedModeBanner: false,
+//         theme: ThemeData(
+//           primaryColor: Colors.green,
+//           // primaryColorDark: Colors.blue,
+//           primaryColorBrightness: Brightness.dark,
+//           // highlightColor: Colors.transparent,
+//           // splashColor: Colors.transparent,
+//         ),
+//         title: "摄影日记",
+//         home: MyHomePage(),
+//       ),
+//     );
+//   }
+// }
