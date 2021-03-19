@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:photodiary/pages/login.dart';
 
 class Profile extends StatelessWidget {
   const Profile({Key key}) : super(key: key);
@@ -6,14 +7,7 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Scaffold(
-        body: Center(
-          child: Text(
-            "登陆注册",
-            style: TextStyle(fontSize: 50),
-          ),
-        ),
-      ),
+      child: LoginPage(),
     );
   }
 }

@@ -71,30 +71,3 @@ class _MyStackPageState extends State<MyStackPage> {
     );
   }
 }
-
-// class MyStackPage extends StatefulWidget {
-//   MyStackPage({Key key}) : super(key: key);
-
-//   @override
-//   _MyStackPageState createState() => _MyStackPageState();
-// }
-
-// class _MyStackPageState extends State<MyStackPage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       child: MaterialApp(
-//         debugShowCheckedModeBanner: false,
-//         theme: ThemeData(
-//           primaryColor: Colors.green,
-//           // primaryColorDark: Colors.blue,
-//           primaryColorBrightness: Brightness.dark,
-//           // highlightColor: Colors.transparent,
-//           // splashColor: Colors.transparent,
-//         ),
-//         title: "摄影日记",
-//         home: MyHomePage(),
-//       ),
-//     );
-//   }
-// }
