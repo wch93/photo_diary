@@ -19,6 +19,9 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           title: Text("摄影日记"),
           bottom: TabBar(
+            indicatorColor: Theme.of(context).buttonColor,
+            indicatorSize: TabBarIndicatorSize.tab,
+            indicatorWeight: 4,
             isScrollable: true,
             tabs: [for (final tab in tabs) Tab(text: tab)],
           ),
