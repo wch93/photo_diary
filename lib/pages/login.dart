@@ -25,7 +25,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     //设置焦点监听
     _focusNodeUserName.addListener(_focusNodeListener);
     _focusNodePassWord.addListener(_focusNodeListener);
@@ -46,7 +45,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     // 移除焦点监听
     _focusNodeUserName.removeListener(_focusNodeListener);
     _focusNodePassWord.removeListener(_focusNodeListener);
@@ -351,10 +349,11 @@ class _LoginPageState extends State<LoginPage> {
         },
         child: Container(
           child: ListView(
+            physics: const NeverScrollableScrollPhysics(),
             children: <Widget>[
               SizedBox(height: ScreenUtil().setHeight(50)),
               logoImageArea,
-              SizedBox(height: ScreenUtil().setHeight(50)),
+              SizedBox(height: ScreenUtil().setHeight(40)),
               inputTextArea,
               SizedBox(height: ScreenUtil().setHeight(30)),
               loginButtonArea,

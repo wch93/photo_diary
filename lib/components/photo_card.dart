@@ -380,26 +380,20 @@ class CardsDemo extends StatefulWidget {
 class _CardsDemoState extends State<CardsDemo> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: AppBar(
-      //   automaticallyImplyLeading: false,
-      //   title: Text("摄影日记"),
-      // ),
-      body: Scrollbar(
-        child: ListView(
-          padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
-          children: [
-            for (final photo in photos(context))
-              Container(
-                margin: const EdgeInsets.only(bottom: 8),
-                child: (photo.cardType == CardType.standard)
-                    ? PhotoCardItem(destination: photo)
-                    : photo.cardType == CardType.tappable
-                        ? TappablePhotoCardItem(destination: photo)
-                        : SelectablePhotoCardItem(destination: photo),
-              ),
-          ],
-        ),
+    return Scrollbar(
+      child: ListView(
+        padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
+        children: [
+          for (final photo in photos(context))
+            Container(
+              margin: const EdgeInsets.only(bottom: 8),
+              child: (photo.cardType == CardType.standard)
+                  ? PhotoCardItem(destination: photo)
+                  : photo.cardType == CardType.tappable
+                      ? TappablePhotoCardItem(destination: photo)
+                      : SelectablePhotoCardItem(destination: photo),
+            ),
+        ],
       ),
     );
   }

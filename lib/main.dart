@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:photodiary/pages/home.dart';
 import 'package:photodiary/pages/profile.dart';
 
-main(List<String> args) {
-  runApp(MyApp());
-}
+main(List<String> args) => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({Key key}) : super(key: key);
@@ -42,9 +40,9 @@ class _MyStackPageState extends State<MyStackPage> {
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text("摄影日记"),
-        ),
+        // appBar: AppBar(
+        //   title: Text("摄影日记"),
+        // ),
         body: Center(
           child: IndexedStack(
             index: this._currentIndex,
