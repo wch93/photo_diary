@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photodiary/pages/home.dart';
 import 'package:photodiary/pages/profile.dart';
+import 'package:photodiary/pages/signup.dart';
 
 main(List<String> args) => runApp(MyApp());
 
@@ -19,8 +20,10 @@ class MyApp extends StatelessWidget {
           highlightColor: Colors.transparent,
           splashColor: Colors.transparent,
         ),
-        // title: "摄影日记",
         home: MyStackPage(),
+        routes: {
+          "signup": (context) => SignUpPage(),
+        },
       ),
     );
   }
@@ -40,9 +43,6 @@ class _MyStackPageState extends State<MyStackPage> {
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
-        // appBar: AppBar(
-        //   title: Text("摄影日记"),
-        // ),
         body: Center(
           child: IndexedStack(
             index: this._currentIndex,

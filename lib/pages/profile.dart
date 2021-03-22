@@ -7,12 +7,7 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("登录"),
-        ),
-        body: LoginPage(),
-      ),
+      child: LoginPage(),
     );
   }
 }

@@ -331,13 +331,18 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             //点击快速注册、执行事件
-            onPressed: () {},
+            onPressed: () async {
+              await Navigator.pushNamed(context, "signup");
+            },
           )
         ],
       ),
     );
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text("登录"),
+      ),
       backgroundColor: Colors.white,
       // 外层添加一个手势，用于点击空白部分，回收键盘
       body: new GestureDetector(
