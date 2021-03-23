@@ -46,10 +46,7 @@ class _MyStackPageState extends State<MyStackPage> {
         body: Center(
           child: IndexedStack(
             index: this._currentIndex,
-            children: <Widget>[
-              MyHomePage(),
-              Profile(),
-            ],
+            children: <Widget>[MyHomePage(), Profile()],
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
