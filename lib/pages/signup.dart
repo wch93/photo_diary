@@ -128,6 +128,7 @@ class _SignUpPageState extends State<SignUpPage> {
               decoration: InputDecoration(
                 labelText: "手机号",
                 hintText: "请输入手机号",
+                prefixText: "+86 ",
                 prefixIcon: Icon(Icons.person),
                 //尾部添加清除按钮
                 suffixIcon: (_isShowClear)

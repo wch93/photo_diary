@@ -129,6 +129,7 @@ class _LoginPageState extends State<LoginPage> {
               decoration: InputDecoration(
                 labelText: "用户名",
                 hintText: "请输入手机号",
+                prefixText: "+86 ",
                 prefixIcon: Icon(Icons.person),
                 //尾部添加清除按钮
                 suffixIcon: (_isShowClear)
