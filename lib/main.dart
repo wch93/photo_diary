@@ -43,6 +43,21 @@ class _MyStackPageState extends State<MyStackPage> {
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
+        // 外层包裹Container来修改位置和大小
+        floatingActionButton: Container(
+          margin: EdgeInsets.only(top: 15),
+          padding: EdgeInsets.all(5),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(80),
+            color: Colors.white,
+          ),
+          child: FloatingActionButton(
+            backgroundColor: Theme.of(context).primaryColor,
+            child: Icon(Icons.add, size: 30),
+            onPressed: () {},
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         body: Center(
           child: IndexedStack(
             index: this._currentIndex,

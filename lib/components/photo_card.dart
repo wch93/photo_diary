@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class Photo {
   const Photo({
@@ -23,63 +24,56 @@ class Photo {
 
 List<Photo> photos(BuildContext context) => [
       Photo(
-        assetName: 'assets/IMG_0001.JPG',
+        assetName:
+            'https://images.unsplash.com/photo-1599719003561-fc49292c85bc?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80',
         title: "十三陵水库旁边的小泰迪",
         description: "晴天,阳光明媚",
         city: "北京",
         location: "十三陵",
       ),
       Photo(
-        assetName: 'assets/IMG_0002.JPG',
+        assetName:
+            'https://images.unsplash.com/photo-1557986410-6e9fdb036362?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80',
         title: "公园盛开的粉色花朵",
         description: "蓝天白云心情好",
         city: "Beijing",
         location: "Chaoyang",
       ),
       Photo(
-        assetName: 'assets/IMG_0003.JPG',
+        assetName:
+            'https://images.unsplash.com/photo-1597032431350-f140b3a82cfa?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
         title: "假装在日本之福神店",
         description: "就看看,买不起",
         city: "北京市昌平区",
         location: "奥特莱斯",
       ),
       Photo(
-        assetName: 'assets/IMG_0004.JPG',
+        assetName:
+            'https://images.unsplash.com/photo-1597032430580-8a8dd4ceab35?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80',
         title: "奶茶店对着墙发呆",
         description: "也没啥好喝的",
         city: "北京市西城区",
         location: "西单大悦城",
       ),
       Photo(
-        assetName: 'assets/IMG_0005.JPG',
+        assetName:
+            'https://images.unsplash.com/photo-1597032430896-ec2e004b7652?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80',
         title: "假装在日本之居酒屋",
         description: "其实在村里",
         city: "北京市海淀区",
         location: "大马路边上",
       ),
       Photo(
-        assetName: 'assets/IMG_0006.JPG',
-        title: "这车真帅",
-        description: "可惜这车牌了",
-        city: "北京市朝阳区",
-        location: "798艺术区",
-      ),
-      Photo(
-        assetName: 'assets/IMG_0007.JPG',
-        title: "海滩之旅",
-        description: "一堆遮阳的",
-        city: "海南省三亚市",
-        location: "就在大海边",
-      ),
-      Photo(
-        assetName: 'assets/IMG_0008.JPG',
+        assetName:
+            'https://images.unsplash.com/photo-1597032431448-8c88c31566ce?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
         title: "你幸福么?",
         description: "在屯里挺幸福",
         city: "北京市朝阳区",
         location: "三里屯",
       ),
       Photo(
-        assetName: 'assets/IMG_0009.JPG',
+        assetName:
+            'https://images.unsplash.com/photo-1599718958367-257f0aa9044c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
         title: "静谧午后",
         description: "疫情期间 - 空无一人的操场",
         city: "北京市朝阳区",
@@ -186,9 +180,10 @@ class PhotoContent extends StatelessWidget {
           child: Stack(
             children: [
               Positioned.fill(
-                child: Ink.image(
-                  image: AssetImage(photo.assetName),
+                child: FadeInImage.memoryNetwork(
                   fit: BoxFit.cover,
+                  placeholder: kTransparentImage,
+                  image: photo.assetName,
                 ),
               ),
               Positioned(
