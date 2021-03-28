@@ -239,18 +239,44 @@ class CardsDemo extends StatefulWidget {
 }
 
 class _CardsDemoState extends State<CardsDemo> {
+  List list = [];
+  _getData() async {
+    return Future.delayed(Duration(seconds: 2), () {
+      setState(() {
+        list = photos(context);
+      });
+    });
+  }
+
+  Future _onRefresh() async {
+    setState(() {
+      list = [];
+    });
+    await _getData();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scrollbar(
-      child: ListView(
-        padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
-        children: [
-          for (final photo in photos(context))
-            Container(
+      child: RefreshIndicator(
+        onRefresh: _onRefresh,
+        child: ListView.builder(
+          itemCount: list.length,
+          itemBuilder: (context, index) {
+            print(list.length);
+            return Container(
               margin: const EdgeInsets.only(bottom: 8),
-              child: TappablePhotoCardItem(photo: photo),
-            ),
-        ],
+              child: TappablePhotoCardItem(photo: list[index]),
+            );
+          },
+          padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
+        ),
       ),
     );
   }
