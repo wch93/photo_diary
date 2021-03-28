@@ -1,6 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:photodiary/components/photo_card.dart';
+import 'package:photodiary/pages/sign_in.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -43,6 +43,17 @@ class _MyHomePageState extends State<MyHomePage>
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(
+        floatingActionButton: Container(
+          child: FloatingActionButton(
+            backgroundColor: Theme.of(context).primaryColor,
+            child: Icon(Icons.add, size: 30),
+            onPressed: () {
+              Navigator.pushNamed(context, SignInPage.routeName);
+            },
+          ),
+        ),
+        // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+
         appBar: AppBar(
           title: Text("摄影日记"),
           bottom: TabBar(

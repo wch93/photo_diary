@@ -1,12 +1,20 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:photodiary/util/server.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
-class SignUpPage extends StatefulWidget {
+class SignInPage extends StatefulWidget {
+  static const routeName = "sign_in";
   @override
-  _SignUpPageState createState() => _SignUpPageState();
+  _SignInPageState createState() => _SignInPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _SignInPageState extends State<SignInPage> {
   //焦点
   FocusNode _focusNodeUserName = FocusNode();
   FocusNode _focusNodePassWord = FocusNode();
@@ -19,6 +27,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   var _password = ''; //用户名
   var _username = ''; //密码
+  var _isShowPwd = false; //是否显示密码
   var _isShowClear = false; //是否显示输入框尾部的清除按钮
 
   @override
@@ -29,6 +38,7 @@ class _SignUpPageState extends State<SignUpPage> {
     //监听用户名框的输入改变
     _userNameController.addListener(() {
       print(_userNameController.text);
+
       // 监听文本框输入变化，当有内容的时候，显示尾部清除按钮，否则不显示
       if (_userNameController.text.length > 0) {
         _isShowClear = true;
@@ -63,29 +73,6 @@ class _SignUpPageState extends State<SignUpPage> {
     }
   }
 
-  // 验证用户名
-  String validateUserName(value) {
-    // 正则匹配手机号
-    RegExp exp = RegExp(
-        r'^((13[0-9])|(14[0-9])|(15[0-9])|(16[0-9])|(17[0-9])|(18[0-9])|(19[0-9]))\d{8}$');
-    if (value.isEmpty) {
-      return '手机号不能为空';
-    } else if (!exp.hasMatch(value)) {
-      return '请输入正确手机号';
-    }
-    return null;
-  }
-
-  // 验证密码
-  String validatePassWord(value) {
-    if (value.isEmpty) {
-      return '验证码不能为空';
-    } else if (value.trim().length != 6 || value.runtimeType != int) {
-      return '请输入 6 位数字验证码';
-    }
-    return null;
-  }
-
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(
@@ -111,9 +98,8 @@ class _SignUpPageState extends State<SignUpPage> {
     Widget inputTextArea = Container(
       margin: EdgeInsets.only(left: 30, right: 30),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(8)),
-        color: Colors.white,
-      ),
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+          color: Colors.white),
       child: Form(
         key: _formKey,
         child: Column(
@@ -125,21 +111,24 @@ class _SignUpPageState extends State<SignUpPage> {
               //设置键盘类型
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: "手机号",
+                labelText: "用户名",
                 hintText: "请输入手机号",
                 prefixText: "+86 ",
-                prefixIcon: Icon(Icons.person),
+                prefixIcon: Icon(Icons.people),
+                // prefix: Checkbox(),
                 //尾部添加清除按钮
                 suffixIcon: (_isShowClear)
                     ? IconButton(
                         icon: Icon(Icons.clear),
-                        onPressed: () => _userNameController.clear(),
-                        // 清空输入框内容
+                        onPressed: () {
+                          // 清空输入框内容
+                          _userNameController.clear();
+                        },
                       )
                     : null,
               ),
               //验证用户名
-              validator: validateUserName,
+              // validator: PhotoUtil.validateUserName,
               //保存数据
               onSaved: (String value) {
                 _username = value;
@@ -147,14 +136,24 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
             TextFormField(
               focusNode: _focusNodePassWord,
-              keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: "验证码",
-                hintText: "请输入验证码",
-                prefixIcon: Icon(Icons.verified_user_rounded),
-              ),
+                  labelText: "密码",
+                  hintText: "请输入密码",
+                  prefixIcon: Icon(Icons.lock),
+                  // 是否显示密码
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                        (_isShowPwd) ? Icons.visibility : Icons.visibility_off),
+                    // 点击改变显示或隐藏密码
+                    onPressed: () {
+                      setState(() {
+                        _isShowPwd = !_isShowPwd;
+                      });
+                    },
+                  )),
+              obscureText: !_isShowPwd,
               //密码验证
-              validator: validatePassWord,
+              // validator: PhotoUtil.validatePassWord,
               //保存数据
               onSaved: (String value) {
                 _password = value;
@@ -162,79 +161,6 @@ class _SignUpPageState extends State<SignUpPage> {
             )
           ],
         ),
-      ),
-    );
-
-    // 发送验证码按钮区域
-    Widget sendVerificationButtonArea = Container(
-      margin: EdgeInsets.only(left: 40, right: 40),
-      height: 45.0,
-      child: ElevatedButton(
-        style: ButtonStyle(
-          //定义文本的样式 这里设置的颜色是不起作用的
-          textStyle: MaterialStateProperty.all(
-            TextStyle(fontSize: 18, color: Colors.red),
-          ),
-          //设置按钮上字体与图标的颜色
-          //foregroundColor: MaterialStateProperty.all(Colors.deepPurple),
-          //更优美的方式来设置
-          foregroundColor: MaterialStateProperty.resolveWith(
-            (states) {
-              if (states.contains(MaterialState.focused) &&
-                  !states.contains(MaterialState.pressed)) {
-                //获取焦点时的颜色
-                return Colors.blue;
-              } else if (states.contains(MaterialState.pressed)) {
-                //按下时的颜色
-                return Colors.deepPurple;
-              }
-              //默认状态使用灰色
-              return Colors.grey;
-            },
-          ),
-          //背景颜色
-          backgroundColor: MaterialStateProperty.resolveWith((states) {
-            //设置按下时的背景颜色
-            // if (states.contains(MaterialState.pressed)) {
-            //   return Theme.of(context).primaryColor;
-            // }
-            //默认不使用背景颜色
-            return Theme.of(context).primaryColor;
-          }),
-          //设置水波纹颜色
-          // overlayColor: MaterialStateProperty.all(Colors.yellow),
-          //设置阴影  不适用于这里的TextButton
-          elevation: MaterialStateProperty.all(0),
-          //设置按钮内边距
-          padding: MaterialStateProperty.all(EdgeInsets.all(10)),
-          //设置按钮的大小
-          minimumSize: MaterialStateProperty.all(Size(200, 100)),
-          //设置边框
-          side: MaterialStateProperty.all(
-              BorderSide(color: Colors.grey, width: 1)),
-          //外边框装饰 会覆盖 side 配置的样式
-          shape: MaterialStateProperty.all(RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0))),
-        ),
-        child: Text(
-          "发送验证码",
-          style: Theme.of(context).primaryTextTheme.subtitle1,
-        ),
-        // 设置按钮圆角
-        // shape:
-        //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-        onPressed: () {
-          //点击登录按钮，解除焦点，回收键盘
-          _focusNodePassWord.unfocus();
-          _focusNodeUserName.unfocus();
-
-          if (_formKey.currentState.validate()) {
-            //只有输入通过验证，才会执行这里
-            _formKey.currentState.save();
-            //todo 登录操作
-            print("$_username + $_password");
-          }
-        },
       ),
     );
 
@@ -248,34 +174,18 @@ class _SignUpPageState extends State<SignUpPage> {
           textStyle: MaterialStateProperty.all(
             TextStyle(fontSize: 18, color: Colors.red),
           ),
-          //设置按钮上字体与图标的颜色
-          //foregroundColor: MaterialStateProperty.all(Colors.deepPurple),
-          //更优美的方式来设置
-          foregroundColor: MaterialStateProperty.resolveWith(
-            (states) {
-              if (states.contains(MaterialState.focused) &&
-                  !states.contains(MaterialState.pressed)) {
-                //获取焦点时的颜色
-                return Colors.blue;
-              } else if (states.contains(MaterialState.pressed)) {
-                //按下时的颜色
-                return Colors.deepPurple;
-              }
-              //默认状态使用灰色
-              return Colors.grey;
-            },
-          ),
           //背景颜色
           backgroundColor: MaterialStateProperty.resolveWith((states) {
-            //设置按下时的背景颜色
-            // if (states.contains(MaterialState.pressed)) {
-            //   return Theme.of(context).primaryColor;
-            // }
+            // 设置按下时的背景颜色
+            if (states.contains(MaterialState.pressed)) {
+              // return Theme.of(context).primaryColor;
+              return Colors.red;
+            }
             //默认不使用背景颜色
             return Theme.of(context).primaryColor;
           }),
           //设置水波纹颜色
-          // overlayColor: MaterialStateProperty.all(Colors.yellow),
+          overlayColor: MaterialStateProperty.all(Colors.transparent),
           //设置阴影  不适用于这里的TextButton
           elevation: MaterialStateProperty.all(0),
           //设置按钮内边距
@@ -290,29 +200,139 @@ class _SignUpPageState extends State<SignUpPage> {
               borderRadius: BorderRadius.circular(10.0))),
         ),
         child: Text(
-          "注册",
+          "登录",
           style: Theme.of(context).primaryTextTheme.subtitle1,
         ),
         // 设置按钮圆角
         // shape:
         //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-        onPressed: () {
+        onPressed: () async {
           //点击登录按钮，解除焦点，回收键盘
           _focusNodePassWord.unfocus();
           _focusNodeUserName.unfocus();
+
           if (_formKey.currentState.validate()) {
             //只有输入通过验证，才会执行这里
             _formKey.currentState.save();
             //todo 登录操作
-            print("$_username + $_password");
+            try {
+              Response response = await Dio().post(
+                PhotoServer.host,
+                data: {
+                  "username": _username,
+                  "pwd": _password,
+                },
+              );
+              Fluttertoast.showToast(
+                msg: "login success. username: $response",
+                toastLength: Toast.LENGTH_SHORT,
+              );
+              print("Server Success! username: $response");
+            } catch (e) {
+              Fluttertoast.showToast(
+                msg: "login fail. ",
+                toastLength: Toast.LENGTH_SHORT,
+              );
+              print(e);
+            }
+
+            // print("$_username + $_password");
           }
         },
       ),
     );
 
+    //第三方登录区域
+    Widget thirdLoginArea = Container(
+      margin: EdgeInsets.only(left: 20, right: 20),
+      child: Column(
+        children: <Widget>[
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Container(
+                width: 60,
+                height: 1.0,
+                color: Colors.grey,
+              ),
+              Text('其他登录方式'),
+              Container(
+                width: 60,
+                height: 1.0,
+                color: Colors.grey,
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 18,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              IconButton(
+                color: Theme.of(context).primaryColor,
+                // 第三方库icon图标
+                icon: Icon(FontAwesomeIcons.weixin),
+                iconSize: 35.0,
+                onPressed: () {},
+              ),
+              IconButton(
+                color: Theme.of(context).primaryColor,
+                icon: Icon(FontAwesomeIcons.facebook),
+                iconSize: 35.0,
+                onPressed: () {},
+              ),
+              IconButton(
+                color: Theme.of(context).primaryColor,
+                icon: Icon(FontAwesomeIcons.qq),
+                iconSize: 35.0,
+                onPressed: () {},
+              )
+            ],
+          )
+        ],
+      ),
+    );
+
+    //忘记密码  立即注册
+    Widget bottomArea = Container(
+      margin: EdgeInsets.only(right: 50, left: 50),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          TextButton(
+            child: Text(
+              "忘记密码?",
+              style: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontSize: 16.0,
+              ),
+            ),
+            //忘记密码按钮，点击执行事件
+            onPressed: () {},
+          ),
+          TextButton(
+            child: Text(
+              "快速注册",
+              style: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontSize: 16.0,
+              ),
+            ),
+            //点击快速注册、执行事件
+            onPressed: () async {
+              await Navigator.pushNamed(context, "signup");
+            },
+          )
+        ],
+      ),
+    );
+
     return Scaffold(
       appBar: AppBar(
-        title: Text("注册"),
+        title: Text("登录"),
       ),
       backgroundColor: Colors.white,
       // 外层添加一个手势，用于点击空白部分，回收键盘
@@ -329,12 +349,14 @@ class _SignUpPageState extends State<SignUpPage> {
             children: <Widget>[
               SizedBox(height: ScreenUtil().setHeight(50)),
               logoImageArea,
-              SizedBox(height: ScreenUtil().setHeight(50)),
+              SizedBox(height: ScreenUtil().setHeight(40)),
               inputTextArea,
-              SizedBox(height: ScreenUtil().setHeight(50)),
-              sendVerificationButtonArea,
               SizedBox(height: ScreenUtil().setHeight(30)),
               loginButtonArea,
+              SizedBox(height: ScreenUtil().setHeight(30)),
+              thirdLoginArea,
+              SizedBox(height: ScreenUtil().setHeight(10)),
+              bottomArea,
             ],
           ),
         ),

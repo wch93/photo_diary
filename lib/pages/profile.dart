@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:photodiary/pages/login.dart';
+import 'package:photodiary/pages/sign_in.dart';
 
 class Profile extends StatelessWidget {
   const Profile({Key key}) : super(key: key);
@@ -7,7 +7,7 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: LoginPage(),
+      child: SignInPage(),
     );
   }
 }
