@@ -25,12 +25,51 @@ abstract class PhotoUtil {
   }
 
   static alertDialog(context, String title, String content) async {
-    showDialog(
+    await showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
           title: Text(title),
           content: Text(content),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("确定"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("取消"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  static simpleDialog(context, String title) async {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return SimpleDialog(
+          title: Text(title),
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("确定"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("取消"),
+            ),
+          ],
         );
       },
     );
