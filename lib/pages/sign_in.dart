@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:photodiary/util/server.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:photodiary/util/util.dart';
 
 class SignInPage extends StatefulWidget {
   static const routeName = "sign_in";
@@ -223,15 +224,21 @@ class _SignInPageState extends State<SignInPage> {
                   "pwd": _password,
                 },
               );
-              Fluttertoast.showToast(
-                msg: "login success. username: $response",
-                toastLength: Toast.LENGTH_SHORT,
+              PhotoUtil.alertDialog(
+                context,
+                "Success",
+                "username: $response",
               );
+              // Fluttertoast.showToast(
+              //   msg: "login success. username: $response",
+              //   toastLength: Toast.LENGTH_SHORT,
+              // );
               print("Server Success! username: $response");
             } catch (e) {
-              Fluttertoast.showToast(
-                msg: "login fail. ",
-                toastLength: Toast.LENGTH_SHORT,
+              PhotoUtil.alertDialog(
+                context,
+                "Fail",
+                "signin failed",
               );
               print(e);
             }

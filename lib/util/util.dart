@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 abstract class PhotoUtil {
   // 验证用户名
   static String validateUserName(value) {
@@ -20,5 +22,17 @@ abstract class PhotoUtil {
       return '密码长度不正确';
     }
     return null;
+  }
+
+  static alertDialog(context, String title, String content) async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(content),
+        );
+      },
+    );
   }
 }
