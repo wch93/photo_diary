@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class PhotoUtil {
   // 验证用户名
@@ -24,6 +25,7 @@ abstract class PhotoUtil {
     return null;
   }
 
+  // 弹出对话框
   static alertDialog(context, String title, String content) async {
     await showDialog(
       context: context,
@@ -73,5 +75,20 @@ abstract class PhotoUtil {
         );
       },
     );
+  }
+
+  static setString(String key, String value) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString(key, value);
+  }
+
+  static setBool(String key, bool value) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setBool(key, value);
+  }
+
+  static setInt(String key, int value) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setInt(key, value);
   }
 }
