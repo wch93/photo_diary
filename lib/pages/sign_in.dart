@@ -1,9 +1,6 @@
 import 'dart:async';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:photodiary/util/server.dart';
 import 'package:photodiary/util/util.dart';
 
@@ -74,21 +71,14 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(
-        BoxConstraints(
-            minWidth: 750, minHeight: 1334, maxWidth: 750, maxHeight: 1334),
-        Orientation.landscape);
-    // ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
-    print(ScreenUtil().scaleHeight);
-
     // logo 图片区域
     Widget logoImageArea = Container(
       alignment: Alignment.topCenter,
       // 设置图片为圆形
       child: Image.asset(
-        "assets/icon_light.png",
-        height: 100,
-        width: 100,
+        "assets/icon_black_transparent.png",
+        height: 150,
+        width: 150,
         fit: BoxFit.cover,
       ),
     );
@@ -97,8 +87,9 @@ class _SignInPageState extends State<SignInPage> {
     Widget inputTextArea = Container(
       margin: EdgeInsets.only(left: 30, right: 30),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-          color: Colors.white),
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+        color: Colors.white,
+      ),
       child: Form(
         key: _formKey,
         child: Column(
@@ -278,19 +269,19 @@ class _SignInPageState extends State<SignInPage> {
               IconButton(
                 color: Theme.of(context).primaryColor,
                 // 第三方库icon图标
-                icon: Icon(FontAwesomeIcons.weixin),
+                icon: Icon(Icons.people),
                 iconSize: 35.0,
                 onPressed: () {},
               ),
               IconButton(
                 color: Theme.of(context).primaryColor,
-                icon: Icon(FontAwesomeIcons.facebook),
+                icon: Icon(Icons.people),
                 iconSize: 35.0,
                 onPressed: () {},
               ),
               IconButton(
                 color: Theme.of(context).primaryColor,
-                icon: Icon(FontAwesomeIcons.qq),
+                icon: Icon(Icons.people),
                 iconSize: 35.0,
                 onPressed: () {},
               )
@@ -352,15 +343,15 @@ class _SignInPageState extends State<SignInPage> {
           child: ListView(
             physics: const NeverScrollableScrollPhysics(),
             children: <Widget>[
-              SizedBox(height: ScreenUtil().setHeight(50)),
+              SizedBox(height: 50),
               logoImageArea,
-              SizedBox(height: ScreenUtil().setHeight(40)),
+              SizedBox(height: 50),
               inputTextArea,
-              SizedBox(height: ScreenUtil().setHeight(30)),
+              SizedBox(height: 50),
               loginButtonArea,
-              SizedBox(height: ScreenUtil().setHeight(30)),
+              SizedBox(height: 50),
               thirdLoginArea,
-              SizedBox(height: ScreenUtil().setHeight(10)),
+              SizedBox(height: 50),
               bottomArea,
             ],
           ),

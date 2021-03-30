@@ -4,17 +4,17 @@ import 'package:photodiary/pages/sign_in.dart';
 import 'package:photodiary/util/provider.dart';
 import 'package:provider/provider.dart';
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class HomePage extends StatefulWidget {
+  HomePage({Key key, this.title}) : super(key: key);
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
 // TabBar 实现
 // 1. 首先需要with SingleTickerProviderStateMixin
-class _MyHomePageState extends State<MyHomePage>
+class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
 

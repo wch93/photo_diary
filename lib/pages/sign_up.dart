@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SignUpPage extends StatefulWidget {
   static const routeName = "sign_up";
@@ -89,19 +88,12 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(
-        BoxConstraints(
-            minWidth: 750, minHeight: 1334, maxWidth: 750, maxHeight: 1334),
-        Orientation.landscape);
-    // ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
-    print(ScreenUtil().scaleHeight);
-
     // logo 图片区域
     Widget logoImageArea = Container(
       alignment: Alignment.topCenter,
       // 设置图片为圆形
       child: Image.asset(
-        "assets/icon_light.png",
+        "assets/icon_black_transparent.png",
         height: 100,
         width: 100,
         fit: BoxFit.cover,
@@ -328,13 +320,13 @@ class _SignUpPageState extends State<SignUpPage> {
           child: ListView(
             physics: const NeverScrollableScrollPhysics(),
             children: <Widget>[
-              SizedBox(height: ScreenUtil().setHeight(50)),
+              SizedBox(height: 50),
               logoImageArea,
-              SizedBox(height: ScreenUtil().setHeight(50)),
+              SizedBox(height: 50),
               inputTextArea,
-              SizedBox(height: ScreenUtil().setHeight(50)),
+              SizedBox(height: 50),
               sendVerificationButtonArea,
-              SizedBox(height: ScreenUtil().setHeight(30)),
+              SizedBox(height: 50),
               loginButtonArea,
             ],
           ),
