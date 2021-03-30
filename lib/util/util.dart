@@ -91,4 +91,19 @@ abstract class PhotoUtil {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setInt(key, value);
   }
+
+  static getString(String key) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.getString(key);
+  }
+
+  static getBool(String key) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.getBool(key);
+  }
+
+  static getInt(String key) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.getInt(key);
+  }
 }

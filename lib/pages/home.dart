@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:photodiary/components/photo_card.dart';
 import 'package:photodiary/pages/sign_in.dart';
+import 'package:photodiary/util/provider.dart';
+import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -33,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage>
     // 为 TabBarController 添加监听
     _tabController.addListener(
       () {
-        print(_tabController.index);
+        // print(_tabController.index);
       },
     );
   }
@@ -42,100 +44,117 @@ class _MyHomePageState extends State<MyHomePage>
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: tabs.length,
-      child: Scaffold(
-        floatingActionButton: SafeArea(
-          child: Container(
-            margin: EdgeInsets.fromLTRB(0, 0, 20, 20),
-            child: FloatingActionButton(
-              backgroundColor: Theme.of(context).primaryColor,
-              child: Icon(Icons.add, size: 30),
-              onPressed: () {
-                Navigator.pushNamed(context, SignInPage.routeName);
-              },
-            ),
-          ),
-        ),
-        // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      child: MultiProvider(
+        providers: [
+          ListenableProvider<Settings>.value(value: Settings.settings),
+        ],
+        child: Consumer<Settings>(
+          builder: (BuildContext context, settings, _) {
+            return Scaffold(
+              floatingActionButton: SafeArea(
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(0, 0, 20, 20),
+                  child: FloatingActionButton(
+                    backgroundColor: settings.currentTheme.primaryColor,
+                    foregroundColor: Colors.white,
+                    child: Icon(Icons.add, size: 30),
+                    onPressed: () {
+                      Navigator.pushNamed(context, SignInPage.routeName);
+                    },
+                  ),
+                ),
+              ),
+              // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 
-        appBar: AppBar(
-          title: Text("摄影日记"),
-          bottom: TabBar(
-            // 3. TabBar 中添加 _tabController
-            controller: _tabController,
-            indicatorColor: Theme.of(context).buttonColor,
-            indicatorSize: TabBarIndicatorSize.tab,
-            indicatorWeight: 4,
-            isScrollable: true,
-            tabs: [for (final tab in tabs) Tab(text: tab)],
-          ),
-        ),
-        body: SafeArea(
-          child: TabBarView(
-            // 4. TabBarView 中添加 _tabController
-            controller: _tabController,
-            children: [
-              Center(child: CardsDemo()),
-              Center(child: Text("风景")),
-              Center(child: Text("写实")),
-              Center(child: Text("写真")),
-              Center(child: Text("微距")),
-              Center(child: Text("航拍")),
-              Center(child: Text("细节")),
-              Center(child: Text("色调")),
-            ],
-          ),
-        ),
-        drawer: Drawer(
-          child: Column(
-            children: [
-              UserAccountsDrawerHeader(
-                accountName: Text("Chenhao Wei"),
-                accountEmail: Text("wchhm8050@gmail.com"),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  // image: DecorationImage(
-                  //   image: NetworkImage(
-                  //     "https://images.unsplash.com/photo-1579546929662-711aa81148cf?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHw%3D&auto=format&fit=crop&w=500&q=60",
-                  //   ),
-                  //   fit: BoxFit.cover,
-                  // ),
+              appBar: AppBar(
+                title: Text("摄影日记"),
+                bottom: TabBar(
+                  // 3. TabBar 中添加 _tabController
+                  controller: _tabController,
+                  indicatorColor: Theme.of(context).buttonColor,
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  indicatorWeight: 4,
+                  isScrollable: true,
+                  tabs: [for (final tab in tabs) Tab(text: tab)],
                 ),
-                currentAccountPicture: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      "https://lh3.googleusercontent.com/ogw/ADGmqu-SojQWiiu0b6YmdHiVhnYrRJ7RUnViywyn15tXWQ=s83-c-mo"),
+                actions: [
+                  IconButton(
+                      icon: Icon(Icons.settings_brightness_outlined),
+                      onPressed: () {
+                        settings.changeBrightness();
+                      })
+                ],
+              ),
+              body: SafeArea(
+                child: TabBarView(
+                  // 4. TabBarView 中添加 _tabController
+                  controller: _tabController,
+                  children: [
+                    Center(child: CardsDemo()),
+                    Center(child: Text("风景")),
+                    Center(child: Text("写实")),
+                    Center(child: Text("写真")),
+                    Center(child: Text("微距")),
+                    Center(child: Text("航拍")),
+                    Center(child: Text("细节")),
+                    Center(child: Text("色调")),
+                  ],
                 ),
               ),
-              ListTile(
-                leading: Icon(Icons.settings),
-                title: Text("设置项1"),
+              drawer: Drawer(
+                child: Column(
+                  children: [
+                    UserAccountsDrawerHeader(
+                      accountName: Text("Chenhao Wei"),
+                      accountEmail: Text("wchhm8050@gmail.com"),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        // image: DecorationImage(
+                        //   image: NetworkImage(
+                        //     "https://images.unsplash.com/photo-1579546929662-711aa81148cf?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHw%3D&auto=format&fit=crop&w=500&q=60",
+                        //   ),
+                        //   fit: BoxFit.cover,
+                        // ),
+                      ),
+                      currentAccountPicture: CircleAvatar(
+                        backgroundImage: NetworkImage(
+                            "https://lh3.googleusercontent.com/ogw/ADGmqu-SojQWiiu0b6YmdHiVhnYrRJ7RUnViywyn15tXWQ=s83-c-mo"),
+                      ),
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.settings),
+                      title: Text("设置项1"),
+                    ),
+                    Divider(),
+                    ListTile(
+                      leading: Icon(Icons.settings),
+                      title: Text("设置项2"),
+                    ),
+                    Divider(),
+                    ListTile(
+                      leading: Icon(Icons.settings),
+                      title: Text("设置项3"),
+                    ),
+                    Divider(),
+                    ListTile(
+                      leading: Icon(Icons.settings),
+                      title: Text("设置项4"),
+                    ),
+                    Divider(),
+                    ListTile(
+                      leading: Icon(Icons.settings),
+                      title: Text("设置项5"),
+                    ),
+                    Divider(),
+                    ListTile(
+                      leading: Icon(Icons.settings),
+                      title: Text("设置项6"),
+                    ),
+                  ],
+                ),
               ),
-              Divider(),
-              ListTile(
-                leading: Icon(Icons.settings),
-                title: Text("设置项2"),
-              ),
-              Divider(),
-              ListTile(
-                leading: Icon(Icons.settings),
-                title: Text("设置项3"),
-              ),
-              Divider(),
-              ListTile(
-                leading: Icon(Icons.settings),
-                title: Text("设置项4"),
-              ),
-              Divider(),
-              ListTile(
-                leading: Icon(Icons.settings),
-                title: Text("设置项5"),
-              ),
-              Divider(),
-              ListTile(
-                leading: Icon(Icons.settings),
-                title: Text("设置项6"),
-              ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

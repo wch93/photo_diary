@@ -88,7 +88,7 @@ class _SignInPageState extends State<SignInPage> {
       alignment: Alignment.topCenter,
       // 设置图片为圆形
       child: Image.asset(
-        "assets/logo.png",
+        "assets/logo_light.png",
         height: 100,
         width: 100,
         fit: BoxFit.cover,

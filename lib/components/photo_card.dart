@@ -142,7 +142,7 @@ class TappablePhotoCardItem extends StatelessWidget {
                 clipBehavior: Clip.antiAlias,
                 shape: shape,
                 child: InkWell(
-                  onTap: () => print('Card was tapped'),
+                  onTap: () {},
                   // Generally, material cards use onSurface with 12% opacity for the pressed state.
                   splashColor:
                       Theme.of(context).colorScheme.onSurface.withOpacity(0.12),
@@ -217,7 +217,7 @@ class PhotoContent extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 8),
                   child: Text(
                     photo.description,
-                    style: descriptionStyle.copyWith(color: Colors.black54),
+                    // style: descriptionStyle.copyWith(color: Colors.black54),
                   ),
                 ),
                 Text(photo.city),
