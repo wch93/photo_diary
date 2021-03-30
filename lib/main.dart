@@ -19,20 +19,13 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState<T extends ChangeNotifier> extends State<MyApp> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ListenableProvider<Settings>.value(value: Settings.settings),
-      ],
-      child: Consumer<Settings>(
-        builder: (BuildContext context, settings, _) {
+    return ChangeNotifierProvider(
+      create: (_) => ThemeNotifier(),
+      child: Consumer<ThemeNotifier>(
+        builder: (context, notifier, child) {
           return MaterialApp(
-            theme: settings.currentTheme,
+            theme: notifier.darkTheme ? dark : light,
             home: MyHomePage(),
             routes: {
               SignUpPage.routeName: (context) => SignUpPage(),

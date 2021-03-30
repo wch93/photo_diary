@@ -76,34 +76,4 @@ abstract class PhotoUtil {
       },
     );
   }
-
-  static setString(String key, String value) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setString(key, value);
-  }
-
-  static setBool(String key, bool value) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setBool(key, value);
-  }
-
-  static setInt(String key, int value) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setInt(key, value);
-  }
-
-  static getString(String key) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.getString(key);
-  }
-
-  static getBool(String key) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.getBool(key);
-  }
-
-  static getInt(String key) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.getInt(key);
-  }
 }
