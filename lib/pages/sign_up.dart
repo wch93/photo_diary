@@ -101,7 +101,7 @@ class _SignUpPageState extends State<SignUpPage> {
       alignment: Alignment.topCenter,
       // 设置图片为圆形
       child: Image.asset(
-        "assets/logo.png",
+        "assets/icon_light.png",
         height: 100,
         width: 100,
         fit: BoxFit.cover,
