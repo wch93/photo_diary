@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:photodiary/components/button.dart';
+import 'package:photodiary/components/logo.dart';
 
 class SignUpPage extends StatefulWidget {
   static const routeName = "sign_up";
@@ -88,24 +90,11 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    // logo 图片区域
-    Widget logoImageArea = Container(
-      alignment: Alignment.topCenter,
-      // 设置图片为圆形
-      child: Image.asset(
-        "assets/icon_black_transparent.png",
-        height: 100,
-        width: 100,
-        fit: BoxFit.cover,
-      ),
-    );
-
     //输入文本框区域
     Widget inputTextArea = Container(
       margin: EdgeInsets.only(left: 30, right: 30),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(8)),
-        color: Colors.white,
       ),
       child: Form(
         key: _formKey,
@@ -158,156 +147,10 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
     );
 
-    // 发送验证码按钮区域
-    Widget sendVerificationButtonArea = Container(
-      margin: EdgeInsets.only(left: 40, right: 40),
-      height: 45.0,
-      child: ElevatedButton(
-        style: ButtonStyle(
-          //定义文本的样式 这里设置的颜色是不起作用的
-          textStyle: MaterialStateProperty.all(
-            TextStyle(fontSize: 18, color: Colors.red),
-          ),
-          //设置按钮上字体与图标的颜色
-          //foregroundColor: MaterialStateProperty.all(Colors.deepPurple),
-          //更优美的方式来设置
-          foregroundColor: MaterialStateProperty.resolveWith(
-            (states) {
-              if (states.contains(MaterialState.focused) &&
-                  !states.contains(MaterialState.pressed)) {
-                //获取焦点时的颜色
-                return Colors.blue;
-              } else if (states.contains(MaterialState.pressed)) {
-                //按下时的颜色
-                return Colors.deepPurple;
-              }
-              //默认状态使用灰色
-              return Colors.grey;
-            },
-          ),
-          //背景颜色
-          backgroundColor: MaterialStateProperty.resolveWith((states) {
-            //设置按下时的背景颜色
-            // if (states.contains(MaterialState.pressed)) {
-            //   return Theme.of(context).primaryColor;
-            // }
-            //默认不使用背景颜色
-            return Theme.of(context).primaryColor;
-          }),
-          //设置水波纹颜色
-          // overlayColor: MaterialStateProperty.all(Colors.yellow),
-          //设置阴影  不适用于这里的TextButton
-          elevation: MaterialStateProperty.all(0),
-          //设置按钮内边距
-          padding: MaterialStateProperty.all(EdgeInsets.all(10)),
-          //设置按钮的大小
-          minimumSize: MaterialStateProperty.all(Size(200, 100)),
-          //设置边框
-          side: MaterialStateProperty.all(
-              BorderSide(color: Colors.grey, width: 1)),
-          //外边框装饰 会覆盖 side 配置的样式
-          shape: MaterialStateProperty.all(RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0))),
-        ),
-        child: Text(
-          "发送验证码",
-          style: Theme.of(context).primaryTextTheme.subtitle1,
-        ),
-        // 设置按钮圆角
-        // shape:
-        //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-        onPressed: () {
-          //点击登录按钮，解除焦点，回收键盘
-          _focusNodePassWord.unfocus();
-          _focusNodeUserName.unfocus();
-
-          if (_formKey.currentState.validate()) {
-            //只有输入通过验证，才会执行这里
-            _formKey.currentState.save();
-            //todo 登录操作
-            print("$_username + $_password");
-          }
-        },
-      ),
-    );
-
-    // 登录按钮区域
-    Widget loginButtonArea = Container(
-      margin: EdgeInsets.only(left: 40, right: 40),
-      height: 45.0,
-      child: ElevatedButton(
-        style: ButtonStyle(
-          //定义文本的样式 这里设置的颜色是不起作用的
-          textStyle: MaterialStateProperty.all(
-            TextStyle(fontSize: 18, color: Colors.red),
-          ),
-          //设置按钮上字体与图标的颜色
-          //foregroundColor: MaterialStateProperty.all(Colors.deepPurple),
-          //更优美的方式来设置
-          foregroundColor: MaterialStateProperty.resolveWith(
-            (states) {
-              if (states.contains(MaterialState.focused) &&
-                  !states.contains(MaterialState.pressed)) {
-                //获取焦点时的颜色
-                return Colors.blue;
-              } else if (states.contains(MaterialState.pressed)) {
-                //按下时的颜色
-                return Colors.deepPurple;
-              }
-              //默认状态使用灰色
-              return Colors.grey;
-            },
-          ),
-          //背景颜色
-          backgroundColor: MaterialStateProperty.resolveWith((states) {
-            //设置按下时的背景颜色
-            // if (states.contains(MaterialState.pressed)) {
-            //   return Theme.of(context).primaryColor;
-            // }
-            //默认不使用背景颜色
-            return Theme.of(context).primaryColor;
-          }),
-          //设置水波纹颜色
-          // overlayColor: MaterialStateProperty.all(Colors.yellow),
-          //设置阴影  不适用于这里的TextButton
-          elevation: MaterialStateProperty.all(0),
-          //设置按钮内边距
-          padding: MaterialStateProperty.all(EdgeInsets.all(10)),
-          //设置按钮的大小
-          minimumSize: MaterialStateProperty.all(Size(200, 100)),
-          //设置边框
-          side: MaterialStateProperty.all(
-              BorderSide(color: Colors.grey, width: 1)),
-          //外边框装饰 会覆盖 side 配置的样式
-          shape: MaterialStateProperty.all(RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0))),
-        ),
-        child: Text(
-          "注册",
-          style: Theme.of(context).primaryTextTheme.subtitle1,
-        ),
-        // 设置按钮圆角
-        // shape:
-        //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-        onPressed: () {
-          //点击登录按钮，解除焦点，回收键盘
-          _focusNodePassWord.unfocus();
-          _focusNodeUserName.unfocus();
-          if (_formKey.currentState.validate()) {
-            //只有输入通过验证，才会执行这里
-            _formKey.currentState.save();
-            //todo 登录操作
-            print("$_username + $_password");
-          }
-        },
-      ),
-    );
-
     return Scaffold(
       appBar: AppBar(
         title: Text("注册"),
       ),
-      backgroundColor: Colors.white,
       // 外层添加一个手势，用于点击空白部分，回收键盘
       body: GestureDetector(
         onTap: () {
@@ -321,13 +164,13 @@ class _SignUpPageState extends State<SignUpPage> {
             physics: const NeverScrollableScrollPhysics(),
             children: <Widget>[
               SizedBox(height: 50),
-              logoImageArea,
+              logoImageArea(context),
               SizedBox(height: 50),
               inputTextArea,
-              SizedBox(height: 50),
-              sendVerificationButtonArea,
-              SizedBox(height: 50),
-              loginButtonArea,
+              SizedBox(height: 30),
+              button(context, "发送验证码", () {}),
+              SizedBox(height: 30),
+              button(context, "注册", () {}),
             ],
           ),
         ),

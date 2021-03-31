@@ -1,6 +1,6 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class Photo {
   const Photo({
@@ -180,10 +180,11 @@ class PhotoContent extends StatelessWidget {
           child: Stack(
             children: [
               Positioned.fill(
-                child: FadeInImage.memoryNetwork(
+                child: ExtendedImage.network(
+                  photo.assetName,
                   fit: BoxFit.cover,
-                  placeholder: kTransparentImage,
-                  image: photo.assetName,
+                  cache: true,
+                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
                 ),
               ),
               Positioned(

@@ -6,12 +6,15 @@ ThemeData light = ThemeData(
   primarySwatch: Colors.indigo,
   accentColor: Colors.pink,
   scaffoldBackgroundColor: Color(0xfff1f1f1),
+  buttonColor: Colors.pink,
 );
 
 ThemeData dark = ThemeData(
   brightness: Brightness.dark,
   primarySwatch: Colors.indigo,
   accentColor: Colors.pink,
+  buttonColor: Colors.pink,
+  iconTheme: IconThemeData(color: Colors.grey),
 );
 
 class ThemeNotifier extends ChangeNotifier {
