@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:photodiary/components/button.dart';
+import 'package:photodiary/components/logo.dart';
+import 'package:photodiary/pages/sign_up.dart';
 import 'package:photodiary/util/server.dart';
 import 'package:photodiary/util/util.dart';
 
@@ -71,24 +74,12 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
-    // logo 图片区域
-    Widget logoImageArea = Container(
-      alignment: Alignment.topCenter,
-      // 设置图片为圆形
-      child: Image.asset(
-        "assets/icon_black_transparent.png",
-        height: 150,
-        width: 150,
-        fit: BoxFit.cover,
-      ),
-    );
-
     //输入文本框区域
     Widget inputTextArea = Container(
       margin: EdgeInsets.only(left: 30, right: 30),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(8)),
-        color: Colors.white,
+        // color: Colors.transparent,
       ),
       child: Form(
         key: _formKey,
@@ -154,142 +145,38 @@ class _SignInPageState extends State<SignInPage> {
       ),
     );
 
-    // 登录按钮区域
-    Widget loginButtonArea = Container(
-      margin: EdgeInsets.only(left: 40, right: 40),
-      height: 45.0,
-      child: ElevatedButton(
-        style: ButtonStyle(
-          //定义文本的样式 这里设置的颜色是不起作用的
-          textStyle: MaterialStateProperty.all(
-            TextStyle(fontSize: 18, color: Colors.red),
-          ),
-          //背景颜色
-          backgroundColor: MaterialStateProperty.resolveWith((states) {
-            // 设置按下时的背景颜色
-            if (states.contains(MaterialState.pressed)) {
-              // return Theme.of(context).primaryColor;
-              return Colors.red;
-            }
-            //默认不使用背景颜色
-            return Theme.of(context).primaryColor;
-          }),
-          //设置水波纹颜色
-          overlayColor: MaterialStateProperty.all(Colors.transparent),
-          //设置阴影  不适用于这里的TextButton
-          elevation: MaterialStateProperty.all(0),
-          //设置按钮内边距
-          padding: MaterialStateProperty.all(EdgeInsets.all(10)),
-          //设置按钮的大小
-          minimumSize: MaterialStateProperty.all(Size(200, 100)),
-          //设置边框
-          side: MaterialStateProperty.all(
-              BorderSide(color: Colors.grey, width: 1)),
-          //外边框装饰 会覆盖 side 配置的样式
-          shape: MaterialStateProperty.all(RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0))),
-        ),
-        child: Text(
-          "登录",
-          style: Theme.of(context).primaryTextTheme.subtitle1,
-        ),
-        // 设置按钮圆角
-        // shape:
-        //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-        onPressed: () async {
-          //点击登录按钮，解除焦点，回收键盘
-          _focusNodePassWord.unfocus();
-          _focusNodeUserName.unfocus();
+    _loginOnPressed() async {
+      //点击登录按钮，解除焦点，回收键盘
+      _focusNodePassWord.unfocus();
+      _focusNodeUserName.unfocus();
 
-          if (_formKey.currentState.validate()) {
-            //只有输入通过验证，才会执行这里
-            _formKey.currentState.save();
-            //todo 登录操作
-            try {
-              Response response = await Dio().post(
-                PhotoServer.host,
-                data: {
-                  "username": _username,
-                  "pwd": _password,
-                },
-              );
-              PhotoUtil.alertDialog(
-                context,
-                "Success",
-                "username: $response",
-              );
-              // Fluttertoast.showToast(
-              //   msg: "login success. username: $response",
-              //   toastLength: Toast.LENGTH_SHORT,
-              // );
-              print("Server Success! username: $response");
-            } catch (e) {
-              PhotoUtil.alertDialog(
-                context,
-                "Fail",
-                "signin failed",
-              );
-              print(e);
-            }
-
-            // print("$_username + $_password");
-          }
-        },
-      ),
-    );
-
-    //第三方登录区域
-    Widget thirdLoginArea = Container(
-      margin: EdgeInsets.only(left: 20, right: 20),
-      child: Column(
-        children: <Widget>[
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Container(
-                width: 60,
-                height: 1.0,
-                color: Colors.grey,
-              ),
-              Text('其他登录方式'),
-              Container(
-                width: 60,
-                height: 1.0,
-                color: Colors.grey,
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 18,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              IconButton(
-                color: Theme.of(context).primaryColor,
-                // 第三方库icon图标
-                icon: Icon(Icons.people),
-                iconSize: 35.0,
-                onPressed: () {},
-              ),
-              IconButton(
-                color: Theme.of(context).primaryColor,
-                icon: Icon(Icons.people),
-                iconSize: 35.0,
-                onPressed: () {},
-              ),
-              IconButton(
-                color: Theme.of(context).primaryColor,
-                icon: Icon(Icons.people),
-                iconSize: 35.0,
-                onPressed: () {},
-              )
-            ],
-          )
-        ],
-      ),
-    );
+      if (_formKey.currentState.validate()) {
+        //只有输入通过验证，才会执行这里
+        _formKey.currentState.save();
+        try {
+          Response response = await Dio().post(
+            PhotoServer.host,
+            data: {
+              "username": _username,
+              "pwd": _password,
+            },
+          );
+          PhotoUtil.alertDialog(
+            context,
+            "Success",
+            "username: $response",
+          );
+          print("Server Success! username: $response");
+        } catch (e) {
+          PhotoUtil.alertDialog(
+            context,
+            "Fail",
+            "signin failed",
+          );
+          print(e);
+        }
+      }
+    }
 
     //忘记密码  立即注册
     Widget bottomArea = Container(
@@ -302,7 +189,7 @@ class _SignInPageState extends State<SignInPage> {
             child: Text(
               "忘记密码?",
               style: TextStyle(
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).accentColor,
                 fontSize: 16.0,
               ),
             ),
@@ -313,13 +200,13 @@ class _SignInPageState extends State<SignInPage> {
             child: Text(
               "快速注册",
               style: TextStyle(
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).accentColor,
                 fontSize: 16.0,
               ),
             ),
             //点击快速注册、执行事件
             onPressed: () async {
-              await Navigator.pushNamed(context, "signup");
+              await Navigator.pushNamed(context, SignUpPage.routeName);
             },
           )
         ],
@@ -330,7 +217,6 @@ class _SignInPageState extends State<SignInPage> {
       appBar: AppBar(
         title: Text("登录"),
       ),
-      backgroundColor: Colors.white,
       // 外层添加一个手势，用于点击空白部分，回收键盘
       body: GestureDetector(
         onTap: () {
@@ -344,14 +230,14 @@ class _SignInPageState extends State<SignInPage> {
             physics: const NeverScrollableScrollPhysics(),
             children: <Widget>[
               SizedBox(height: 50),
-              logoImageArea,
-              SizedBox(height: 50),
+              logoImageArea(context),
+              SizedBox(height: 30),
               inputTextArea,
               SizedBox(height: 50),
-              loginButtonArea,
-              SizedBox(height: 50),
-              thirdLoginArea,
-              SizedBox(height: 50),
+              button(context, "登录", _loginOnPressed),
+              // SizedBox(height: 50),
+              // thirdLoginArea,
+              SizedBox(height: 20),
               bottomArea,
             ],
           ),
