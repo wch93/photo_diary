@@ -24,7 +24,6 @@ dependencies:
   flutter:
     sdk: flutter
   dio: ^4.0.0
-  fluttertoast: ^8.0.3
   shared_preferences: ^2.0.5
   provider: ^5.0.0
   extended_image: ^4.0.0  
