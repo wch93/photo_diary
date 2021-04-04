@@ -3,10 +3,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class PhotoUtil {
   // 验证用户名
-  static String validateUserName(value) {
+  static String validatePhone(value) {
     // 正则匹配手机号
-    RegExp exp = RegExp(
-        r'^((13[0-9])|(14[0-9])|(15[0-9])|(16[0-9])|(17[0-9])|(18[0-9])|(19[0-9]))\d{8}$');
+    RegExp exp = RegExp(r'^((13[0-9])|(14[0-9])|(15[0-9])|(16[0-9])|(17[0-9])|(18[0-9])|(19[0-9]))\d{8}$');
     if (value.isEmpty) {
       return '用户名不能为空!';
     } else if (!exp.hasMatch(value)) {

@@ -24,56 +24,49 @@ class Photo {
 
 List<Photo> photos(BuildContext context) => [
       Photo(
-        assetName:
-            'https://images.unsplash.com/photo-1599719003561-fc49292c85bc?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80',
+        assetName: 'https://images.unsplash.com/photo-1599719003561-fc49292c85bc?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80',
         title: "十三陵水库旁边的小泰迪",
         description: "晴天,阳光明媚",
         city: "北京",
         location: "十三陵",
       ),
       Photo(
-        assetName:
-            'https://images.unsplash.com/photo-1557986410-6e9fdb036362?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80',
+        assetName: 'https://images.unsplash.com/photo-1557986410-6e9fdb036362?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80',
         title: "公园盛开的粉色花朵",
         description: "蓝天白云心情好",
         city: "Beijing",
         location: "Chaoyang",
       ),
       Photo(
-        assetName:
-            'https://images.unsplash.com/photo-1597032431350-f140b3a82cfa?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+        assetName: 'https://images.unsplash.com/photo-1597032431350-f140b3a82cfa?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
         title: "假装在日本之福神店",
         description: "就看看,买不起",
         city: "北京市昌平区",
         location: "奥特莱斯",
       ),
       Photo(
-        assetName:
-            'https://images.unsplash.com/photo-1597032430580-8a8dd4ceab35?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80',
+        assetName: 'https://images.unsplash.com/photo-1597032430580-8a8dd4ceab35?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80',
         title: "奶茶店对着墙发呆",
         description: "也没啥好喝的",
         city: "北京市西城区",
         location: "西单大悦城",
       ),
       Photo(
-        assetName:
-            'https://images.unsplash.com/photo-1597032430896-ec2e004b7652?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80',
+        assetName: 'https://images.unsplash.com/photo-1597032430896-ec2e004b7652?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80',
         title: "假装在日本之居酒屋",
         description: "其实在村里",
         city: "北京市海淀区",
         location: "大马路边上",
       ),
       Photo(
-        assetName:
-            'https://images.unsplash.com/photo-1597032431448-8c88c31566ce?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+        assetName: 'https://images.unsplash.com/photo-1597032431448-8c88c31566ce?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
         title: "你幸福么?",
         description: "在屯里挺幸福",
         city: "北京市朝阳区",
         location: "三里屯",
       ),
       Photo(
-        assetName:
-            'https://images.unsplash.com/photo-1599718958367-257f0aa9044c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+        assetName: 'https://images.unsplash.com/photo-1599718958367-257f0aa9044c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
         title: "静谧午后",
         description: "疫情期间 - 空无一人的操场",
         city: "北京市朝阳区",
@@ -144,8 +137,7 @@ class TappablePhotoCardItem extends StatelessWidget {
                 child: InkWell(
                   onTap: () {},
                   // Generally, material cards use onSurface with 12% opacity for the pressed state.
-                  splashColor:
-                      Theme.of(context).colorScheme.onSurface.withOpacity(0.12),
+                  splashColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.12),
                   // Generally, material cards do not have a highlight overlay.
                   highlightColor: Colors.transparent,
                   child: PhotoContent(photo: photo),
@@ -194,10 +186,7 @@ class PhotoContent extends StatelessWidget {
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
                   alignment: Alignment.centerLeft,
-                  child: Text(
-                    photo.title,
-                    style: titleStyle,
-                  ),
+                  child: Text(photo.title, style: titleStyle),
                 ),
               ),
             ],
@@ -212,14 +201,9 @@ class PhotoContent extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // This array contains the three line description on each card
-                // demo.
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8),
-                  child: Text(
-                    photo.description,
-                    // style: descriptionStyle.copyWith(color: Colors.black54),
-                  ),
+                  child: Text(photo.description),
                 ),
                 Text(photo.city),
                 Text(photo.location),
@@ -267,17 +251,18 @@ class _CardsDemoState extends State<CardsDemo> {
     return Scrollbar(
       child: RefreshIndicator(
         onRefresh: _onRefresh,
-        child: ListView.builder(
-          itemCount: list.length,
-          itemBuilder: (context, index) {
-            print(list.length);
-            return Container(
-              margin: const EdgeInsets.only(bottom: 8),
-              child: TappablePhotoCardItem(photo: list[index]),
-            );
-          },
-          padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
-        ),
+        child: list.isEmpty
+            ? Center(child: CircularProgressIndicator())
+            : ListView.builder(
+                itemCount: list.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: const EdgeInsets.only(bottom: 8),
+                    child: TappablePhotoCardItem(photo: list[index]),
+                  );
+                },
+                padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
+              ),
       ),
     );
   }

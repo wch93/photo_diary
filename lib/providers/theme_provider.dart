@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:photodiary/util/const.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 ThemeData light = ThemeData(
@@ -18,7 +19,6 @@ ThemeData dark = ThemeData(
 );
 
 class ThemeNotifier extends ChangeNotifier {
-  final String key = "theme";
   SharedPreferences _pref;
   bool _darkTheme;
   bool get darkTheme => _darkTheme;
@@ -30,18 +30,18 @@ class ThemeNotifier extends ChangeNotifier {
 
   _loadFromPrefs() async {
     await _initPrefs();
-    _darkTheme = _pref.getBool(key) ?? true;
+    _darkTheme = _pref.getBool(Constants.theme) ?? false;
     notifyListeners();
   }
 
   _saveToPrefs() async {
     await _initPrefs();
-    _pref.setBool(key, _darkTheme);
+    _pref.setBool(Constants.theme, _darkTheme);
   }
 
   // 构造函数初始化主题
   ThemeNotifier() {
-    _darkTheme = false;
+    // _darkTheme = false;
     _loadFromPrefs(); // add this line
   }
   toggleTheme() {

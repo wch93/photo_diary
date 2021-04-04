@@ -4,47 +4,38 @@ import 'package:flutter/material.dart';
 import 'package:photodiary/components/button.dart';
 import 'package:photodiary/components/logo.dart';
 import 'package:photodiary/pages/sign_up.dart';
-import 'package:photodiary/util/server.dart';
+import 'package:photodiary/providers/user_info_provider.dart';
+import 'package:photodiary/util/const.dart';
 import 'package:photodiary/util/util.dart';
+import 'package:provider/provider.dart';
 
 class SignInPage extends StatefulWidget {
-  static const routeName = "sign_in";
+  static const routeName = RoutesName.signInPage;
   @override
   _SignInPageState createState() => _SignInPageState();
 }
 
 class _SignInPageState extends State<SignInPage> {
   //焦点
-  FocusNode _focusNodeUserName = FocusNode();
+  FocusNode _focusNodeUserPhone = FocusNode();
   FocusNode _focusNodePassWord = FocusNode();
 
   //用户名输入框控制器，此控制器可以监听用户名输入框操作
-  TextEditingController _userNameController = TextEditingController();
+  TextEditingController _userPhoneController = TextEditingController();
 
   //表单状态
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  var _password = ''; //用户名
-  var _username = ''; //密码
   var _isShowPwd = false; //是否显示密码
-  var _isShowClear = false; //是否显示输入框尾部的清除按钮
 
   @override
   void initState() {
     //设置焦点监听
-    _focusNodeUserName.addListener(_focusNodeListener);
+    _focusNodeUserPhone.addListener(_focusNodeListener);
     _focusNodePassWord.addListener(_focusNodeListener);
     //监听用户名框的输入改变
-    _userNameController.addListener(() {
-      print(_userNameController.text);
-
-      // 监听文本框输入变化，当有内容的时候，显示尾部清除按钮，否则不显示
-      if (_userNameController.text.length > 0) {
-        _isShowClear = true;
-      } else {
-        _isShowClear = false;
-      }
-      setState(() {});
+    _userPhoneController.addListener(() {
+      print(_userPhoneController.text);
     });
     super.initState();
   }
@@ -52,15 +43,15 @@ class _SignInPageState extends State<SignInPage> {
   @override
   void dispose() {
     // 移除焦点监听
-    _focusNodeUserName.removeListener(_focusNodeListener);
+    _focusNodeUserPhone.removeListener(_focusNodeListener);
     _focusNodePassWord.removeListener(_focusNodeListener);
-    _userNameController.dispose();
+    _userPhoneController.dispose();
     super.dispose();
   }
 
   // 监听焦点
   Future<Null> _focusNodeListener() async {
-    if (_focusNodeUserName.hasFocus) {
+    if (_focusNodeUserPhone.hasFocus) {
       print("用户名框获取焦点");
       // 取消密码框的焦点状态
       _focusNodePassWord.unfocus();
@@ -68,7 +59,7 @@ class _SignInPageState extends State<SignInPage> {
     if (_focusNodePassWord.hasFocus) {
       print("密码框获取焦点");
       // 取消用户名框焦点状态
-      _focusNodeUserName.unfocus();
+      _focusNodeUserPhone.unfocus();
     }
   }
 
@@ -77,90 +68,82 @@ class _SignInPageState extends State<SignInPage> {
     //输入文本框区域
     Widget inputTextArea = Container(
       margin: EdgeInsets.only(left: 30, right: 30),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(8)),
-        // color: Colors.transparent,
-      ),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            TextFormField(
-              controller: _userNameController,
-              focusNode: _focusNodeUserName,
-              //设置键盘类型
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: "用户名",
-                hintText: "请输入手机号",
-                prefixText: "+86 ",
-                prefixIcon: Icon(Icons.people),
-                // prefix: Checkbox(),
-                //尾部添加清除按钮
-                suffixIcon: (_isShowClear)
-                    ? IconButton(
-                        icon: Icon(Icons.clear),
-                        onPressed: () {
-                          // 清空输入框内容
-                          _userNameController.clear();
-                        },
-                      )
-                    : null,
-              ),
-              //验证用户名
-              // validator: PhotoUtil.validateUserName,
-              //保存数据
-              onSaved: (String value) {
-                _username = value;
-              },
+      decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(8))),
+      child: Consumer<UserInfoProvider>(
+        builder: (BuildContext context, notifier, child) {
+          _userPhoneController.text = notifier.userInfo.userPhone;
+          _userPhoneController.selection = TextSelection.fromPosition(
+            TextPosition(
+              affinity: TextAffinity.downstream,
+              offset: '${_userPhoneController.text}'.length,
             ),
-            TextFormField(
-              focusNode: _focusNodePassWord,
-              decoration: InputDecoration(
-                  labelText: "密码",
-                  hintText: "请输入密码",
-                  prefixIcon: Icon(Icons.lock),
-                  // 是否显示密码
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                        (_isShowPwd) ? Icons.visibility : Icons.visibility_off),
-                    // 点击改变显示或隐藏密码
-                    onPressed: () {
-                      setState(() {
-                        _isShowPwd = !_isShowPwd;
-                      });
-                    },
-                  )),
-              obscureText: !_isShowPwd,
-              //密码验证
-              // validator: PhotoUtil.validatePassWord,
-              //保存数据
-              onSaved: (String value) {
-                _password = value;
-              },
-            )
-          ],
-        ),
+          );
+          return Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                TextFormField(
+                  controller: _userPhoneController,
+                  focusNode: _focusNodeUserPhone,
+                  //设置键盘类型
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: "用户名",
+                    hintText: "请输入手机号",
+                    prefixText: "+86 ",
+                    prefixIcon: Icon(Icons.people),
+                    //尾部添加清除按钮
+                    suffixIcon: _userPhoneController.text.length > 0
+                        ? IconButton(
+                            icon: Icon(Icons.clear),
+                            onPressed: () => _userPhoneController.clear(),
+                          )
+                        : null,
+                  ),
+                  //验证用户名
+                  validator: PhotoUtil.validatePhone,
+                  //保存数据
+                  onSaved: (String value) {
+                    notifier.userInfo.userPhone = value;
+                    notifier.saveUserInfo();
+                  },
+                ),
+                TextFormField(
+                  focusNode: _focusNodePassWord,
+                  decoration: InputDecoration(
+                      labelText: "密码",
+                      hintText: "请输入密码",
+                      prefixIcon: Icon(Icons.lock),
+                      // 是否显示密码
+                      suffixIcon: IconButton(
+                        icon: Icon((_isShowPwd) ? Icons.visibility : Icons.visibility_off),
+                        // 点击改变显示或隐藏密码
+                        onPressed: () {
+                          setState(() {
+                            _isShowPwd = !_isShowPwd;
+                          });
+                        },
+                      )),
+                  obscureText: !_isShowPwd,
+                )
+              ],
+            ),
+          );
+        },
       ),
     );
 
     _loginOnPressed() async {
       //点击登录按钮，解除焦点，回收键盘
       _focusNodePassWord.unfocus();
-      _focusNodeUserName.unfocus();
+      _focusNodeUserPhone.unfocus();
 
       if (_formKey.currentState.validate()) {
         //只有输入通过验证，才会执行这里
         _formKey.currentState.save();
         try {
-          Response response = await Dio().post(
-            PhotoServer.host,
-            data: {
-              "username": _username,
-              "pwd": _password,
-            },
-          );
+          Response response = await Future.delayed(Duration(seconds: 2));
           PhotoUtil.alertDialog(
             context,
             "Success",
@@ -220,10 +203,8 @@ class _SignInPageState extends State<SignInPage> {
       // 外层添加一个手势，用于点击空白部分，回收键盘
       body: GestureDetector(
         onTap: () {
-          // 点击空白区域，回收键盘
-          print("点击了空白区域");
           _focusNodePassWord.unfocus();
-          _focusNodeUserName.unfocus();
+          _focusNodeUserPhone.unfocus();
         },
         child: Container(
           child: ListView(
@@ -234,9 +215,9 @@ class _SignInPageState extends State<SignInPage> {
               SizedBox(height: 30),
               inputTextArea,
               SizedBox(height: 50),
-              button(context, "登录", _loginOnPressed),
-              // SizedBox(height: 50),
-              // thirdLoginArea,
+              button(context, "登录", () {
+                _loginOnPressed();
+              }),
               SizedBox(height: 20),
               bottomArea,
             ],

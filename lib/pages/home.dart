@@ -1,7 +1,10 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:photodiary/components/photo_card.dart';
 import 'package:photodiary/pages/sign_in.dart';
-import 'package:photodiary/util/provider.dart';
+import 'package:photodiary/providers/theme_provider.dart';
+import 'package:photodiary/providers/user_info_provider.dart';
+import 'package:photodiary/util/const.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,41 +15,17 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-// TabBar 实现
-// 1. 首先需要with SingleTickerProviderStateMixin
-class _HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin {
-  TabController _tabController;
-
-  final tabs = ["人像", "风景", "写实", "写真", "微距", "航拍", "细节", "色调"];
-
-  // 生命周期函数: 销毁时执行
-  @override
-  void dispose() {
-    super.dispose();
-    _tabController.dispose();
-  }
-
-  // 2. State 类初始化时, 生成 _tabController
+class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: tabs.length, vsync: this);
-    // 为 TabBarController 添加监听
-    _tabController.addListener(
-      () {
-        // print(_tabController.index);
-      },
-    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: tabs.length,
-      child: Consumer<ThemeNotifier>(
-        builder: (BuildContext context, notifier, child) {
-          return Scaffold(
+    return Consumer<ThemeNotifier>(
+      builder: (BuildContext context, notifier, child) {
+        return Scaffold(
             floatingActionButton: SafeArea(
               child: Container(
                 margin: EdgeInsets.fromLTRB(0, 0, 20, 20),
@@ -60,98 +39,64 @@ class _HomePageState extends State<HomePage>
                 ),
               ),
             ),
-            // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-
             appBar: AppBar(
               title: Text("摄影日记"),
-              bottom: TabBar(
-                // 3. TabBar 中添加 _tabController
-                controller: _tabController,
-                indicatorColor: Theme.of(context).buttonColor,
-                indicatorSize: TabBarIndicatorSize.tab,
-                indicatorWeight: 4,
-                isScrollable: true,
-                tabs: [for (final tab in tabs) Tab(text: tab)],
-              ),
               actions: [
                 IconButton(
-                    icon: Icon(Icons.settings_brightness_outlined),
-                    onPressed: () {
-                      notifier.toggleTheme();
-                    })
+                  icon: Icon(Icons.settings_brightness_outlined),
+                  onPressed: () => notifier.toggleTheme(),
+                )
               ],
             ),
-            body: SafeArea(
-              child: TabBarView(
-                // 4. TabBarView 中添加 _tabController
-                controller: _tabController,
-                children: [
-                  Center(child: CardsDemo()),
-                  Center(child: Text("风景")),
-                  Center(child: Text("写实")),
-                  Center(child: Text("写真")),
-                  Center(child: Text("微距")),
-                  Center(child: Text("航拍")),
-                  Center(child: Text("细节")),
-                  Center(child: Text("色调")),
-                ],
-              ),
-            ),
-            drawer: Drawer(
-              child: Column(
-                children: [
-                  UserAccountsDrawerHeader(
-                    accountName: Text("Chenhao Wei"),
-                    accountEmail: Text("wchhm8050@gmail.com"),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      // image: DecorationImage(
-                      //   image: NetworkImage(
-                      //     "https://images.unsplash.com/photo-1579546929662-711aa81148cf?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHw%3D&auto=format&fit=crop&w=500&q=60",
-                      //   ),
-                      //   fit: BoxFit.cover,
-                      // ),
-                    ),
-                    currentAccountPicture: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                          "https://lh3.googleusercontent.com/ogw/ADGmqu-SojQWiiu0b6YmdHiVhnYrRJ7RUnViywyn15tXWQ=s83-c-mo"),
-                    ),
+            body: CardsDemo(),
+            drawer: Consumer<UserInfoProvider>(
+              builder: (context, userProvider, child) {
+                return Drawer(
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        child: UserAccountsDrawerHeader(
+                          accountName: userProvider.userInfo.loginStatus
+                              ? Text(userProvider.userInfo.userName)
+                              : Padding(
+                                  padding: const EdgeInsets.fromLTRB(10, 0, 0, 8),
+                                  child: Text("点击登录", style: TextStyle(color: Colors.white)),
+                                ),
+                          accountEmail: Padding(padding: const EdgeInsets.fromLTRB(8, 0, 0, 5)),
+                          decoration: BoxDecoration(color: Theme.of(context).primaryColor),
+                          currentAccountPicture: ClipOval(
+                            child: userProvider.userInfo.avatarUrl == ''
+                                ? Image.asset('assets/icon_white_transparent.png')
+                                : ExtendedImage.network(
+                                    // "https://lh3.googleusercontent.com/ogw/ADGmqu-SojQWiiu0b6YmdHiVhnYrRJ7RUnViywyn15tXWQ=s83-c-mo",
+                                    userProvider.userInfo.avatarUrl,
+                                    fit: BoxFit.cover,
+                                    cache: true,
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(30.0),
+                                    ),
+                                  ),
+                          ),
+                        ),
+                        onTap: () {
+                          if (!userProvider.userInfo.loginStatus) Navigator.pushNamed(context, RoutesName.signInPage);
+                        },
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.settings),
+                        title: Text("设置项1"),
+                      ),
+                      Divider(),
+                      ListTile(
+                        leading: Icon(Icons.settings),
+                        title: Text("设置项2"),
+                      ),
+                    ],
                   ),
-                  ListTile(
-                    leading: Icon(Icons.settings),
-                    title: Text("设置项1"),
-                  ),
-                  Divider(),
-                  ListTile(
-                    leading: Icon(Icons.settings),
-                    title: Text("设置项2"),
-                  ),
-                  Divider(),
-                  ListTile(
-                    leading: Icon(Icons.settings),
-                    title: Text("设置项3"),
-                  ),
-                  Divider(),
-                  ListTile(
-                    leading: Icon(Icons.settings),
-                    title: Text("设置项4"),
-                  ),
-                  Divider(),
-                  ListTile(
-                    leading: Icon(Icons.settings),
-                    title: Text("设置项5"),
-                  ),
-                  Divider(),
-                  ListTile(
-                    leading: Icon(Icons.settings),
-                    title: Text("设置项6"),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
+                );
+              },
+            ));
+      },
     );
   }
 }
