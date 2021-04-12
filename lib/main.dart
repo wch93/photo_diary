@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photodiary/pages/home.dart';
@@ -7,6 +9,7 @@ import 'package:photodiary/pages/sign_up.dart';
 import 'package:photodiary/providers/theme_provider.dart';
 import 'package:photodiary/providers/user_info_provider.dart';
 import 'package:photodiary/util/const.dart';
+import 'package:photodiary/util/util.dart';
 import 'package:provider/provider.dart';
 import 'package:sp_util/sp_util.dart';
 
@@ -41,6 +44,19 @@ class _MyAppState<T extends ChangeNotifier> extends State<MyApp> {
             RoutesName.signInPage: (context) => SignInPage(),
             RoutesName.signUpPage: (context) => SignUpPage(),
             RoutesName.newPhotoPage: (context) => NewPhotoPage(),
+          },
+          builder: (BuildContext context, Widget child) {
+            /// 仅针对安卓
+            if (Platform.isAndroid) {
+              /// 切换深色模式会触发此方法，这里设置导航栏颜色
+              PhotoUtil.setSystemNavigationBar(notifier.darkTheme);
+            }
+
+            /// 保证文字大小不受手机系统设置影响 https://www.kikt.top/posts/flutter/layout/dynamic-text/
+            return MediaQuery(
+              data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+              child: child,
+            );
           },
         );
       },
