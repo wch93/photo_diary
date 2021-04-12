@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:sp_util/sp_util.dart';
 
 main(List<String> args) async {
+  WidgetsFlutterBinding.ensureInitialized();
   await SpUtil.getInstance();
   runApp(MultiProvider(
     providers: [

@@ -19,22 +19,16 @@ ThemeData dark = ThemeData(
 );
 
 class ThemeNotifier extends ChangeNotifier {
-  bool _darkTheme;
-  bool get darkTheme => _darkTheme;
-
-  _saveToPrefs() {
-    SpUtil.putBool(Constants.theme, _darkTheme);
-    notifyListeners();
-  }
+  bool darkTheme;
 
   ThemeNotifier() {
-    _darkTheme = SpUtil.getBool(Constants.theme) ?? false;
-    _saveToPrefs();
+    darkTheme = SpUtil.getBool(Constants.theme) ?? false;
+    SpUtil.putBool(Constants.theme, darkTheme);
   }
 
   toggleTheme() {
-    _darkTheme = !_darkTheme;
-    _saveToPrefs();
+    darkTheme = !darkTheme;
+    SpUtil.putBool(Constants.theme, darkTheme);
     notifyListeners();
   }
 }
