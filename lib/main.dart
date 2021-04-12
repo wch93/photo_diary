@@ -1,13 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photodiary/pages/home.dart';
+import 'package:photodiary/pages/new_photo.dart';
 import 'package:photodiary/pages/sign_in.dart';
 import 'package:photodiary/pages/sign_up.dart';
 import 'package:photodiary/providers/theme_provider.dart';
 import 'package:photodiary/providers/user_info_provider.dart';
+import 'package:photodiary/util/const.dart';
 import 'package:provider/provider.dart';
+import 'package:sp_util/sp_util.dart';
 
-main(List<String> args) {
+main(List<String> args) async {
+  await SpUtil.getInstance();
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => ThemeNotifier()),
@@ -33,8 +37,9 @@ class _MyAppState<T extends ChangeNotifier> extends State<MyApp> {
           theme: notifier.darkTheme ? dark : light,
           home: HomePage(),
           routes: {
-            SignInPage.routeName: (context) => SignInPage(),
-            SignUpPage.routeName: (context) => SignUpPage(),
+            RoutesName.signInPage: (context) => SignInPage(),
+            RoutesName.signUpPage: (context) => SignUpPage(),
+            RoutesName.newPhotoPage: (context) => NewPhotoPage(),
           },
         );
       },

@@ -1,7 +1,6 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:photodiary/components/photo_card.dart';
-import 'package:photodiary/pages/sign_in.dart';
 import 'package:photodiary/providers/theme_provider.dart';
 import 'package:photodiary/providers/user_info_provider.dart';
 import 'package:photodiary/util/const.dart';
@@ -34,7 +33,7 @@ class _HomePageState extends State<HomePage> {
                   foregroundColor: Colors.white,
                   child: Icon(Icons.add, size: 30),
                   onPressed: () {
-                    Navigator.pushNamed(context, SignInPage.routeName);
+                    Navigator.pushNamed(context, RoutesName.newPhotoPage);
                   },
                 ),
               ),

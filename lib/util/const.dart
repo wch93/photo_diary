@@ -11,4 +11,5 @@ abstract class Constants {
 abstract class RoutesName {
   static const String signInPage = "sign_in";
   static const String signUpPage = "sign_up";
+  static const String newPhotoPage = "new_photo_page";
 }
