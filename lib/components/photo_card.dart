@@ -233,13 +233,6 @@ class _CardsDemoState extends State<CardsDemo> {
     });
   }
 
-  Future _onRefresh() async {
-    setState(() {
-      list = [];
-    });
-    await _getData();
-  }
-
   @override
   void initState() {
     super.initState();
@@ -250,7 +243,10 @@ class _CardsDemoState extends State<CardsDemo> {
   Widget build(BuildContext context) {
     return Scrollbar(
       child: RefreshIndicator(
-        onRefresh: _onRefresh,
+        displacement: 40,
+        onRefresh: () async {
+          await _getData();
+        },
         child: list.isEmpty
             ? Center(child: CircularProgressIndicator())
             : ListView.builder(

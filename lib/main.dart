@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:double_back_to_close/double_back_to_close.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photodiary/pages/home.dart';
@@ -39,7 +40,10 @@ class _MyAppState<T extends ChangeNotifier> extends State<MyApp> {
       builder: (context, notifier, child) {
         return MaterialApp(
           theme: notifier.darkTheme ? dark : light,
-          home: HomePage(),
+          home: DoubleBack(
+            message: '再次点击退出',
+            child: HomePage(),
+          ),
           routes: {
             RoutesName.signInPage: (context) => SignInPage(),
             RoutesName.signUpPage: (context) => SignUpPage(),
