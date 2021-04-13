@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 Widget button(context, String label, Function onPress) {
   return Container(
-    margin: EdgeInsets.only(left: 40, right: 40),
+    // margin: EdgeInsets.only(left: 40, right: 40),
     height: 45.0,
     child: ElevatedButton(
       style: ButtonStyle(

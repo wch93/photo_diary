@@ -5,17 +5,19 @@ import 'package:sp_util/sp_util.dart';
 ThemeData light = ThemeData(
   brightness: Brightness.light,
   primarySwatch: Colors.indigo,
-  accentColor: Colors.pink,
-  scaffoldBackgroundColor: Color(0xfff1f1f1),
-  buttonColor: Colors.pink,
+  accentColor: Colors.indigo,
+  buttonColor: Colors.indigo,
+  colorScheme: ColorScheme.light(),
+  splashColor: Colors.transparent,
 );
 
 ThemeData dark = ThemeData(
   brightness: Brightness.dark,
-  primarySwatch: Colors.indigo,
+  primarySwatch: Colors.pink,
   accentColor: Colors.pink,
   buttonColor: Colors.pink,
-  iconTheme: IconThemeData(color: Colors.grey),
+  colorScheme: ColorScheme.dark(),
+  splashColor: Colors.transparent,
 );
 
 class ThemeNotifier extends ChangeNotifier {

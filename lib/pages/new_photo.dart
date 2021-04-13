@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:photodiary/components/button.dart';
 import 'package:photodiary/util/const.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -63,6 +64,7 @@ class _NewPhotoPageState extends State<NewPhotoPage> {
       setState(() {
         _imgServerPath = "http://xx.xxx.com${responseMap["path"]}";
       });
+      print(_imgServerPath);
     } else {
       print('failed');
     }
@@ -114,7 +116,7 @@ class _NewPhotoPageState extends State<NewPhotoPage> {
           title: Text('上传照片'),
         ),
         body: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.fromLTRB(25, 20, 25, 0),
           child: ListView(
             children: [
               GestureDetector(
@@ -138,10 +140,7 @@ class _NewPhotoPageState extends State<NewPhotoPage> {
                 ),
               ),
               SizedBox(height: ScreenUtil().setHeight(10)),
-              ElevatedButton(
-                onPressed: _uploadImage,
-                child: Text('上传图片'),
-              ),
+              button(context, '上传图片', _uploadImage),
             ],
           ),
         ),

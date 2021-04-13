@@ -67,7 +67,7 @@ class _SignInPageState extends State<SignInPage> {
   Widget build(BuildContext context) {
     //输入文本框区域
     Widget inputTextArea = Container(
-      margin: EdgeInsets.only(left: 30, right: 30),
+      margin: EdgeInsets.only(left: 5, right: 5),
       decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(8))),
       child: Consumer<UserInfoProvider>(
         builder: (BuildContext context, notifier, child) {
@@ -207,6 +207,7 @@ class _SignInPageState extends State<SignInPage> {
           _focusNodeUserPhone.unfocus();
         },
         child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 30),
           child: ListView(
             physics: const NeverScrollableScrollPhysics(),
             children: <Widget>[
@@ -215,9 +216,7 @@ class _SignInPageState extends State<SignInPage> {
               SizedBox(height: 30),
               inputTextArea,
               SizedBox(height: 50),
-              button(context, "登录", () {
-                _loginOnPressed();
-              }),
+              button(context, "登录", _loginOnPressed),
               SizedBox(height: 20),
               bottomArea,
             ],
