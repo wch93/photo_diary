@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,6 +17,10 @@ class NewPhotoPage extends StatefulWidget {
 class _NewPhotoPageState extends State<NewPhotoPage> {
   //记录选择的照片
   File _image;
+
+  //当图片上传成功后，记录当前上传的图片在服务器中的位置
+  String _imgServerPath;
+
   final picker = ImagePicker();
 
   //拍照
@@ -42,6 +47,25 @@ class _NewPhotoPageState extends State<NewPhotoPage> {
         print('No image selected.');
       }
     });
+  }
+
+  //上传图片到服务器
+  _uploadImage() async {
+    FormData formData = FormData.fromMap({
+      //"": "", //这里写其他需要传递的参数
+      "file": {_image, "imageName.png"},
+    });
+    var response = await Dio().post("http://xx.xxx.com/imgupload", data: formData);
+    print(response);
+    if (response.statusCode == 200) {
+      Map responseMap = response.data;
+      print("http://xx.xxx.com${responseMap["path"]}");
+      setState(() {
+        _imgServerPath = "http://xx.xxx.com${responseMap["path"]}";
+      });
+    } else {
+      print('failed');
+    }
   }
 
   Future _openModalBottomSheet() async {
@@ -89,11 +113,11 @@ class _NewPhotoPageState extends State<NewPhotoPage> {
         appBar: AppBar(
           title: Text('上传照片'),
         ),
-        body: ListView(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: GestureDetector(
+        body: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: ListView(
+            children: [
+              GestureDetector(
                 onTap: _openModalBottomSheet,
                 child: Card(
                   child: Container(
@@ -113,8 +137,13 @@ class _NewPhotoPageState extends State<NewPhotoPage> {
                   ),
                 ),
               ),
-            ),
-          ],
+              SizedBox(height: ScreenUtil().setHeight(10)),
+              ElevatedButton(
+                onPressed: _uploadImage,
+                child: Text('上传图片'),
+              ),
+            ],
+          ),
         ),
       ),
     );
