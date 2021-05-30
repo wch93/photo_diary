@@ -89,8 +89,8 @@ class _SignInPageState extends State<SignInPage> {
                   //设置键盘类型
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    labelText: "用户名",
-                    hintText: "请输入手机号",
+                    labelText: "手机号",
+                    // hintText: "请输入手机号",
                     prefixText: "+86 ",
                     prefixIcon: Icon(Icons.people),
                     //尾部添加清除按钮
@@ -113,7 +113,7 @@ class _SignInPageState extends State<SignInPage> {
                   focusNode: _focusNodePassWord,
                   decoration: InputDecoration(
                       labelText: "密码",
-                      hintText: "请输入密码",
+                      // hintText: "请输入密码",
                       prefixIcon: Icon(Icons.lock),
                       // 是否显示密码
                       suffixIcon: IconButton(
@@ -163,7 +163,6 @@ class _SignInPageState extends State<SignInPage> {
 
     //忘记密码  立即注册
     Widget bottomArea = Container(
-      margin: EdgeInsets.only(right: 50, left: 50),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -215,7 +214,7 @@ class _SignInPageState extends State<SignInPage> {
               logoImageArea(context),
               SizedBox(height: 30),
               inputTextArea,
-              SizedBox(height: 50),
+              SizedBox(height: 35),
               button(context, "登录", _loginOnPressed),
               SizedBox(height: 20),
               bottomArea,

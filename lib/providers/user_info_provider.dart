@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:photodiary/util/const.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,7 +17,7 @@ class UserInfo {
 }
 
 class UserInfoProvider extends ChangeNotifier {
-  UserInfo userInfo = UserInfo();
+  UserInfo userInfo = UserInfo(needVerification: true, loginStatus: false);
   SharedPreferences _pref;
 
   _initPrefs() async {

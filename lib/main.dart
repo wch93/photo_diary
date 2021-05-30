@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:double_back_to_close/double_back_to_close.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:photodiary/pages/bottom_nav_bar.dart';
 import 'package:photodiary/pages/home.dart';
 import 'package:photodiary/pages/new_photo.dart';
 import 'package:photodiary/pages/sign_in.dart';
