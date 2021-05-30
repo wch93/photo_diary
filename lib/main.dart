@@ -3,6 +3,7 @@ import 'package:double_back_to_close/double_back_to_close.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photodiary/pages/bottom_nav_bar.dart';
+import 'package:photodiary/pages/home.dart';
 import 'package:photodiary/pages/new_photo.dart';
 import 'package:photodiary/pages/sign_in.dart';
 import 'package:photodiary/pages/sign_up.dart';
@@ -41,7 +42,7 @@ class _MyAppState<T extends ChangeNotifier> extends State<MyApp> {
           theme: notifier.darkTheme ? dark : light,
           home: DoubleBack(
             message: '再次点击退出',
-            child: BottomNavPage(),
+            child: HomePage(),
           ),
           routes: {
             RoutesName.signInPage: (context) => SignInPage(),
