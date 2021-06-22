@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:photodiary/components/button.dart';
 import 'package:photodiary/components/logo.dart';
+import 'package:photodiary/util/const.dart';
 
 class SignUpPage extends StatefulWidget {
-  static const routeName = "sign_up";
+  static const routeName = RoutesName.signUpPage;
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
