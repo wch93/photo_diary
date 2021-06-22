@@ -169,9 +169,15 @@ class _SignUpPageState extends State<SignUpPage> {
               SizedBox(height: 50),
               inputTextArea,
               SizedBox(height: 30),
-              button(context, "发送验证码", () {}),
+              Container(
+                margin: EdgeInsets.only(left: 30, right: 30),
+                child: button(context, "发送验证码", () {}),
+              ),
               SizedBox(height: 30),
-              button(context, "注册", () {}),
+              Container(
+                margin: EdgeInsets.only(left: 30, right: 30),
+                child: button(context, "注册", () {}),
+              ),
             ],
           ),
         ),
