@@ -87,32 +87,12 @@ class _HomePageState extends State<HomePage> {
                     ),
                     ListTile(
                       leading: Icon(Icons.settings),
-                      title: Text("设置项1"),
+                      title: Text("夜间模式"),
                     ),
                     Divider(),
                     ListTile(
                       leading: Icon(Icons.settings),
                       title: Text("设置项2"),
-                    ),
-                    Divider(),
-                    ListTile(
-                      leading: Icon(Icons.settings),
-                      title: Text("设置项3"),
-                    ),
-                    Divider(),
-                    ListTile(
-                      leading: Icon(Icons.settings),
-                      title: Text("设置项4"),
-                    ),
-                    Divider(),
-                    ListTile(
-                      leading: Icon(Icons.settings),
-                      title: Text("设置项5"),
-                    ),
-                    Divider(),
-                    ListTile(
-                      leading: Icon(Icons.settings),
-                      title: Text("设置项6"),
                     ),
                   ],
                 );

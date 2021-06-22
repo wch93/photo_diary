@@ -3,12 +3,9 @@ import 'package:double_back_to_close/double_back_to_close.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photodiary/pages/home.dart';
-import 'package:photodiary/pages/new_photo.dart';
-import 'package:photodiary/pages/sign_in.dart';
-import 'package:photodiary/pages/sign_up.dart';
 import 'package:photodiary/providers/theme_provider.dart';
 import 'package:photodiary/providers/user_info_provider.dart';
-import 'package:photodiary/util/const.dart';
+import 'package:photodiary/util/routes.dart';
 import 'package:photodiary/util/util.dart';
 import 'package:provider/provider.dart';
 import 'package:sp_util/sp_util.dart';
@@ -38,16 +35,15 @@ class _MyAppState<T extends ChangeNotifier> extends State<MyApp> {
     return Consumer<ThemeNotifier>(
       builder: (context, notifier, child) {
         return MaterialApp(
+          debugShowCheckedModeBanner: false,
           theme: notifier.darkTheme ? dark : light,
+          // 双击退出
           home: DoubleBack(
             message: '再次点击退出',
             child: HomePage(),
           ),
-          routes: {
-            RoutesName.signInPage: (context) => SignInPage(),
-            RoutesName.signUpPage: (context) => SignUpPage(),
-            RoutesName.newPhotoPage: (context) => NewPhotoPage(),
-          },
+          routes: routes,
+          // 针对安卓的优化
           builder: (BuildContext context, Widget child) {
             /// 仅针对安卓
             if (Platform.isAndroid) {
