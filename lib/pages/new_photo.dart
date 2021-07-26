@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:photodiary/components/button.dart';
 import 'package:photodiary/util/const.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:exif/exif.dart';
 
 class NewPhotoPage extends StatefulWidget {
   static const routeName = RoutesName.newPhotoPage;
@@ -52,6 +53,10 @@ class _NewPhotoPageState extends State<NewPhotoPage> {
 
   //上传图片到服务器
   _uploadImage() async {
+    print('------------------');
+    print(_image.absolute);
+    var d = await printExifOf(_image.path);
+    print(d);
     FormData formData = FormData.fromMap({
       //"": "", //这里写其他需要传递的参数
       "file": {_image, "imageName.png"},
@@ -68,6 +73,17 @@ class _NewPhotoPageState extends State<NewPhotoPage> {
     } else {
       print('failed');
     }
+  }
+
+  printExifOf(String path) async {
+    Map<String, IfdTag> tags = await readExifFromBytes(await new File(path).readAsBytes());
+    var sb = StringBuffer();
+
+    tags.forEach((k, v) {
+      sb.write("$k: $v \n");
+    });
+
+    return sb.toString();
   }
 
   Future _openModalBottomSheet() async {
