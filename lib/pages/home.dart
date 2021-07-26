@@ -85,15 +85,28 @@ class _HomePageState extends State<HomePage> {
                         }
                       },
                     ),
-                    ListTile(
-                      leading: Icon(Icons.settings),
-                      title: Text("夜间模式"),
+                    Container(
+                      child: ListTile(
+                        leading: Icon(Icons.settings),
+                        title: Text("夜间模式"),
+                        trailing: Container(
+                          child: DropdownButton(
+                            items: [
+                              DropdownMenuItem(child: Text("跟随系统")),
+                              // DropdownMenuItem(child: Text("深色")),
+                              // DropdownMenuItem(child: Text("浅色")),
+                            ],
+                            onChanged: (value) {},
+                          ),
+                        ),
+                        onTap: () {},
+                      ),
                     ),
-                    Divider(),
-                    ListTile(
-                      leading: Icon(Icons.settings),
-                      title: Text("设置项2"),
-                    ),
+                    // Divider(),
+                    // ListTile(
+                    //   leading: Icon(Icons.settings),
+                    //   title: Text("设置项2"),
+                    // ),
                   ],
                 );
               },

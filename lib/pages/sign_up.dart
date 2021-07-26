@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:photodiary/components/button.dart';
 import 'package:photodiary/components/logo.dart';
+import 'package:photodiary/util/const.dart';
 
 class SignUpPage extends StatefulWidget {
-  static const routeName = "sign_up";
+  static const routeName = RoutesName.signUpPage;
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
@@ -169,9 +170,15 @@ class _SignUpPageState extends State<SignUpPage> {
               SizedBox(height: 50),
               inputTextArea,
               SizedBox(height: 30),
-              button(context, "发送验证码", () {}),
+              Container(
+                margin: EdgeInsets.only(left: 30, right: 30),
+                child: button(context, "发送验证码", () {}),
+              ),
               SizedBox(height: 30),
-              button(context, "注册", () {}),
+              Container(
+                margin: EdgeInsets.only(left: 30, right: 30),
+                child: button(context, "注册", () {}),
+              ),
             ],
           ),
         ),
